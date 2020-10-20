@@ -1,0 +1,37 @@
+title: Omnia Code | Pradipta's Tech Blog
+description: > # this means to ignore newlines until "baseurl:"
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+permalink: ':title/'
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+site-twitter: #if your site has a twitter account, enter it here
+
+# Author Settings
+author: Pradipta Sarma # add your name
+author-img: pradipta.jpg # add your photo
+about-author: I am a software developer focusing on backend development. Mostly working with Java during the day, random stuff at night. Always learning. # add description
+social-twitter: sarmapradipta
+social-facebook: # add your Facebook handle
+social-github: pradipta # add your Github handle
+social-linkedin: pradiptasarma
+social-email: pradiptasarma@outlook.com
+
+# Disqus
+discus-identifier: omniacode # add your discus identifier
+
+# Tracker
+analytics: UA-165888045-1
+
+# Build Settings
+markdown: kramdown
+plugins:
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jemoji
+
+paginate: 8
+paginate_path: "/page/:num"
+
+exclude: ["node_modules", "gulpfile.js", "package.json", "yarn.lock"]
