@@ -10,6 +10,9 @@ layout: default
       </div>
       <div class="author-name">{{site.author}}</div>
       <p>{{site.about-author}}</p>
+      {% if site.about-author-secondary %}
+        <p>{{site.about-author-secondary}}</p>
+      {% endif %}
     </div>
   </header> <!-- End Header -->
   <footer>

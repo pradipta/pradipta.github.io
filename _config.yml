@@ -11,7 +11,8 @@ site-twitter: #if your site has a twitter account, enter it here
 # Author Settings
 author: Pradipta Sarma # add your name
 author-img: pradipta.jpg # add your photo
-about-author: Software Engineer. UX Enthusiast. # add description
+about-author: Software Engineer. # add description
+about-author-secondary: UX Enthusiast.
 social-twitter: sarmapradipta
 social-facebook: # add your Facebook handle
 social-github: pradipta # add your Github handle
