@@ -27,7 +27,7 @@ I wish to upgrade to a setup with:
 <ol>
 <li>Dual Monitor Setup (one vertical) with a monitor arm</li>
 <li>Keychron K1 / Logitech MX Keys</li>
-<li>Logitech MX Master 2s/3</li>
+<li><s>Logitech MX Master 2s/3</s></li>
 <li>A custom self built standing desk</li>
 <ol>
 
