@@ -1,0 +1,33 @@
+---
+layout: post
+title:  My Work Setup 
+date: 2020-10-02 13:32:20 +0300
+description: Work from home setup post. Keeps getting updated. # Add post description (optional)
+img: setup.jpg # Add image post (optional)
+fig-caption: # Add figcaption (optional)
+tags: [ZSH, Mac, Termninal]
+---
+Above is what my setup looked like 2 months back.
+
+My work laptop is a 2019 13 inch 8GB MacBook Pro and my personal laptop is the 2017 13 inch [Dell Inspiron 5370](https://www.dell.com/support/home/en-in/product-support/product/inspiron-13-5370-laptop/overview) with 256 GB SSD, Intel i5 8th Gen CPU and 8 GB of RAM running Ubuntu 18.
+
+I use the Google Pixel 3 XL as my primary phone.
+
+I use a 32 inch [Acer EB321HQ](https://www.acer.com/ac/en/US/content/model/UM.JE1AA.C01) with the stand that it came with. I have a plan of upgrading it with a monitor arm.
+
+I have a 60″ by 30″ engineered woord custom build desk with minimal cable management.
+
+I use the Logitech K230 Wireless Keyboard and a Logitech M230 Wireless Mouse. 
+
+After a total of 5 years of the mouse, upgraded to the [Logitech MX Master 2S](https://www.logitech.com/en-in/product/mx-master-2s-flow) and the [TVS Gold Mechanical Keyboard](https://www.tvs-e.in/gold/). I have a plan of upgrading to the Keychron K1 TKL.
+
+For audio I primarily use the [Apple AirPods Pro](https://www.apple.com/in/airpods-pro/). I use the [JBL 750BTNC](https://in.jbl.com/TUNE750BTNC.html) incase I want to use a pair of overhead headphones. I also use a pair of FND 2.1 channel and a Google Home Mini.
+
+I wish to upgrade to a setup with:
+<ol>
+<li>Dual Monitor Setup (one vertical) with a monitor arm</li>
+<li>Keychron K1 / Logitech MX Keys</li>
+<li>Logitech MX Master 2s/3</li>
+<li>A custom self built standing desk</li>
+<ol>
+
