@@ -3,17 +3,17 @@ layout: post
 title:  My Work Setup 
 date: 2020-10-02 13:32:20 +0300
 description: Work from home setup post. Keeps getting updated. # Add post description (optional)
-img: setup.jpg # Add image post (optional)
+img: setup2.jpg # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags: [ZSH, Mac, Termninal]
 ---
-Above is what my setup looked like 2 months back.
+This is what my setup looks like right now.
 
 My work laptop is a 2019 13 inch 8GB MacBook Pro and my personal laptop is the 2017 13 inch [Dell Inspiron 5370](https://www.dell.com/support/home/en-in/product-support/product/inspiron-13-5370-laptop/overview) with 256 GB SSD, Intel i5 8th Gen CPU and 8 GB of RAM running Ubuntu 18.
 
 I use the Google Pixel 3 XL as my primary phone.
 
-I use a 32 inch [Acer EB321HQ](https://www.acer.com/ac/en/US/content/model/UM.JE1AA.C01) with the stand that it came with. I have a plan of upgrading it with a monitor arm.
+I use a 32 inch [Acer EB321HQ](https://www.acer.com/ac/en/US/content/model/UM.JE1AA.C01) and a 22 inch [Dell S2216H](https://www.dell.com/ae/business/p/dell-s2216h-monitor/pd) ~with the stand that it came with. I have a plan of upgrading it with a monitor arm.~ with a [Rife dual monitor arm](https://www.amazon.in/dp/B084TMSQFJ). Thye Dell monitor is from work. The great team over at [upGrad](https://www.upgrad.com/?utm_source=pradipta.github.io&utm_medium=PradiptaBlog) sent it over to my home.
 
 I have a 60″ by 30″ engineered wood custom built desk with minimal cable management.
 
@@ -25,7 +25,7 @@ For audio I primarily use the [Apple AirPods Pro](https://www.apple.com/in/airpo
 
 I wish to upgrade to a setup with:
 <ol>
-<li>Dual Monitor Setup (one vertical) with a monitor arm</li>
+<li><del>Dual Monitor Setup with a monitor arm</del></li>
 <li>Keychron K1 / Logitech MX Keys</li>
 <li><s>Logitech MX Master 2s/3</s></li>
 <li>A custom self built standing desk</li>
