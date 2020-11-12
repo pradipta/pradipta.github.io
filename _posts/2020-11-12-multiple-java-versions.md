@@ -21,8 +21,16 @@ export JAVA11_HOME=$(/usr/libexec/java_home -v11)
 
 alias java8='export JAVA_HOME=$JAVA8_HOME'
 alias java11='export JAVA_HOME=$JAVA11_HOME'
+
+# To use Java 8
+java8
+
+# To use Java 11
+java11
 ```
 
 After doing so, I now have two aliases `java8` and `java11`, calling which, sets my `JAVA_HOME` to either `JAVA8_HOME` or `JAVA11_HOME`. Adding a new one is as easy as exporting a new home and creating an alias for it.
 
 In case you're using zsh, you can write these into your `.zshrc` file using `echo` or pasting them into the file manually and doing a `source ~/.zshrc`. An awesome tutorial to set up ZSH is up [here](https://pradipta.github.io/terminal-setup-on-mac/) or [here](https://dev.to/pradipta/terminal-setup-on-macos-48l9)
+
+There is another way of doing this using `jenv`. A post on that will be here soon.
