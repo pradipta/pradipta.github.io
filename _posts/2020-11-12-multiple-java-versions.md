@@ -11,7 +11,7 @@ Java now released a new version every 6 months, the latest as on the date of thi
 
 You might be using a version of Java for work or your personal use, and may need to use another version of it for a different project. Or, if you're one who would want to try out the newest version as soon as it comes out and also have the stable version installed, this can help. Although, you can pick up a JAR from anytime in the past 25 years, and most likely it will run on the newest version of Java, it is good to have an LTS (or whatever your main version of need is) installed for your actual projects.
 
-To change a version of Java, you need to change the `JAVA_HOME` environment variable. ANd it's a pain to do it everytime.
+To change a version of Java, you need to change the `JAVA_HOME` environment variable. And it's a pain to do it every time.
 
 I have two projects that I work on almost everyday. One runs on Java 8 while the other is on Java 11. Here's what I did to be able to switch between them when needed.
 
