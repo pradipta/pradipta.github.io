@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  JJWT With Java 11 (9+) 
+title:  A Problem with JJWT With Java 11 (9+) 
 date: 2020-11-13 13:32:20 +0300
 description: How to handle multiple versions of JDK and switch between them as and when needed
 img: jaxb.jpg # Add image post (optional)
