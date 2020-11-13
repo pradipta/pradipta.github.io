@@ -5,7 +5,7 @@ date: 2020-11-13 13:32:20 +0300
 description: How to handle multiple versions of JDK and switch between them as and when needed
 img: jaxb.jpg # Add image post (optional)
 fig-caption: # Add figcaption (optional)
-tags: [Java, JDK, Java Versions, Java 8, Java 11, JVM]
+tags: [Java, JDK, JJWT, Spring, JAXB, SpringBoot]
 ---
 I was implementing Spring Security for a service I am working on for work. The project is based on Java 11 and the Spring Boot Framework.
 Usign the JWT token, I was supposed to extract user details and roles. The JWT is signed using a secret key with has been stored in properties encoded in base 64.
