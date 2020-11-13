@@ -2,7 +2,11 @@
 layout: post
 title:  A Problem with JJWT With Java 11 (9+) 
 date: 2020-11-13 13:32:20 +0300
+<<<<<<< HEAD
 description: A probelm with parsing JWT signed with a base 64 encoded secret with JAVA 11
+=======
+description: How to handle multiple versions of JDK and switch between them as and when needed
+>>>>>>> a53dbfcf503228ed802eea92bd875db864a5eb47
 img: jaxb.jpg # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags: [Java, JDK, JJWT, Spring, JAXB, SpringBoot]
