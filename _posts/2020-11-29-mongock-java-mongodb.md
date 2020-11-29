@@ -7,7 +7,7 @@ img: mongock.png # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags: [Java, Spring, Mongo, MongoDB, Mongock, SpringBoot]
 ---
-Database Migration tools are essential with applications where you need to migrate data into a datbase, change a schema, update a record/document across all environments and where it is tedious to do it manually (_almost always?_). These can also help you with keeping a track of the changes made, just like version control.
+Database Migration tools are essential with applications where you need to migrate data into a database, change a schema, update a record/document across all environments and where it is tedious to do it manually (_almost always?_). These can also help you with keeping a track of the changes made, just like version control.
 
 With Java there are various libraries you can use for the purpose. There's [Liquibase](https://www.liquibase.org/), [Flyway](https://flywaydb.org/), [Mongock](https://github.com/cloudyrock/mongock) and maybe more.
 
@@ -15,13 +15,13 @@ When using MongoDB as the database for the application, I found that Mongock wou
 
 [Mongobee](https://github.com/mongobee/mongobee) seems to be outdated and not being maintained anymore.
 
-To use the same with a Java, you would need the following dependancies (in addition to the Mongo Java Driver/Spring Mongo data that you'd use to set up the application anyways):
+To use the same with a Java, you would need the following dependencies (in addition to the Mongo Java Driver/Spring Mongo data that you'd use to set up the application anyways):
 * [Mongock BOM](https://mvnrepository.com/artifact/com.github.cloudyrock.mongock/mongock-bom)
 * [Mongock runner](https://mvnrepository.com/artifact/com.github.cloudyrock.mongock/mongock)
 * [Mongock driver](https://mvnrepository.com/artifact/com.github.cloudyrock.mongock/mongock-spring-v5)
 * [MongoDB driver sync](https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync)
 
-Make sure not to import MOngock Core along with the above dependancies, as it will lead you into having multiple versions of a library in your classpath. Read more on this [here](https://github.com/cloudyrock/mongock/issues/274)
+Make sure not to import MOngock Core along with the above dependencies, as it will lead you into having multiple versions of a library in your classpath. Read more on this [here](https://github.com/cloudyrock/mongock/issues/274)
 
 On importing the above, all you need to do is:
 * Annote the Application Class with `@EnableMongock`
@@ -56,6 +56,8 @@ public class Changelog {
     }
 }
 ```
+
+There is also another method where you write the builder yourself and not annotate the application with `@EnableMongock`. You'd want to do it if you want to have a control over the beans and configure things. Read the [documentation](https://www.mongock.io/quick-start) for more info.
 
 With these, you can be sure to have the changes being executed onto the DB on a successful deployment to any environment.
 
