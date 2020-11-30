@@ -57,7 +57,7 @@ public class Changelog {
 }
 ```
 
-There is also another method where you write the builder yourself and not annotate the application with `@EnableMongock`. You'd want to do it if you want to have a control over the beans and configure things. Read the [documentation](https://www.mongock.io/quick-start) for more info.
+There is also another method where you write the builder yourself and not annotate the application with `@EnableMongock`. You'd want to do it if you want to have a control over the beans and configure things. Read the [documentation](https://www.mongock.io/quick-start) for more information.
 
 With these, you can be sure to have the changes being executed onto the DB on a successful deployment to any environment.
 
