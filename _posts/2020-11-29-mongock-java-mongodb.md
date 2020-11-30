@@ -21,15 +21,15 @@ To use the same with a Java, you would need the following dependencies (in addit
 * [Mongock driver](https://mvnrepository.com/artifact/com.github.cloudyrock.mongock/mongock-spring-v5)
 * [MongoDB driver sync](https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync)
 
-Make sure not to import MOngock Core along with the above dependencies, as it will lead you into having multiple versions of a library in your classpath. Read more on this [here](https://github.com/cloudyrock/mongock/issues/274)
+Make sure not to import Mongock Core along with the above dependencies, as it will lead you into having multiple versions of a library in your classpath. Read more on this [here](https://github.com/cloudyrock/mongock/issues/274)
 
 On importing the above, all you need to do is:
 * Annote the Application Class with `@EnableMongock`
 * Specify the package(s) where you'd localte your `Changelog` classes on your `application.yml` or `application.properties` under `mongock.change-logs-scan-package`
 
-With this, the application should be ready to be run, without an issue. Leave comments or visit the [issues](https://github.com/cloudyrock/mongock/issues) section on Github, and you'd most likely find it.
+With this, the application should be ready to be run, without an issue. If you face any, leave a comment or visit the [issues](https://github.com/cloudyrock/mongock/issues) section on Github, and you'd most likely find a solution for it.
 
-To add changelogs, create a `changelog` class in the package mentioned in the properties file. Annotate the class with `@Changelog(order = "001...")`. The order defines the order in which the changelog classes will be executed in case there are multiple. The class should now contain the `changesets`. The changesets are nothing but Java methods. You can create collections, insert a document, or do whatever you'd want to that you can do via a Java method. The method would run at the Startup and the changes (if any) would get executed (if not already).
+To add a changelog, create a `changelog` class in the package mentioned in the properties file. Annotate the class with `@Changelog(order = "001...")`. The order defines the order in which the changelog classes will be executed in case there are multiple. The class should now contain the `changesets`. The changesets are nothing but Java methods. You can create collections, insert a document, or do whatever you'd want to that you can do via a Java method. The method would run at the Startup and the changes (if any) would get executed (if not already).
 
 Example class:
 
