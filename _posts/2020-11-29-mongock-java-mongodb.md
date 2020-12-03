@@ -15,7 +15,7 @@ When using MongoDB as the database for the application, I found that Mongock wou
 
 [Mongobee](https://github.com/mongobee/mongobee) seems to be outdated and not being maintained anymore.
 
-To use the same with a Java, you would need the following dependencies (in addition to the Mongo Java Driver/Spring Mongo data that you'd use to set up the application anyways):
+To use the same with Java, you would need the following dependencies (in addition to the Mongo Java Driver/Spring Mongo data that you'd use to set up the application anyways):
 * [Mongock BOM](https://mvnrepository.com/artifact/com.github.cloudyrock.mongock/mongock-bom)
 * [Mongock runner](https://mvnrepository.com/artifact/com.github.cloudyrock.mongock/mongock)
 * [Mongock driver](https://mvnrepository.com/artifact/com.github.cloudyrock.mongock/mongock-spring-v5)
