@@ -5,21 +5,19 @@ date: 2020-10-02 13:32:20 +0300
 description: Work from home setup post. Keeps getting updated. # Add post description (optional)
 img: setup2.jpg # Add image post (optional)
 fig-caption: # Add figcaption (optional)
-tags: [ZSH, Mac, Termninal]
+tags: [Desk Setup]
 ---
-This is what my setup looked like a few days back.
+This is what my current work setup looks like.
 
-My work laptop is a 2019 13 inch 8GB MacBook Pro and my personal laptop is the 2017 13 inch [Dell Inspiron 5370](https://www.dell.com/support/home/en-in/product-support/product/inspiron-13-5370-laptop/overview) with 256 GB SSD, Intel i5 8th Gen CPU and 8 GB of RAM running Ubuntu 18.
+My work laptop is a 16" 16 GBGB MacBook Pro.
 
 I use the iPhone 12 Pro Max as my primary phone and I have a Google Pixel 3 XL which I use occasionally and to click night photos.
 
-I use a 32 inch [Acer EB321HQ](https://www.acer.com/ac/en/US/content/model/UM.JE1AA.C01) and a 22 inch [Dell S2216H](https://www.dell.com/ae/business/p/dell-s2216h-monitor/pd) ~~with the stand that it came with. I have a plan of upgrading it with a monitor arm~~ with a [Rife dual monitor arm](https://www.amazon.in/dp/B084TMSQFJ). Thye Dell monitor is from work. The great team over at [upGrad](https://www.upgrad.com/?utm_source=pradipta.github.io&utm_medium=PradiptaBlog) sent it over to my home.
+I use a 32 inch [Acer EB321HQ](https://www.acer.com/ac/en/US/content/model/UM.JE1AA.C01).
 
-I have a 60″ by 30″ engineered wood custom built desk with minimal cable management.
+My desk is a single motor operated sit stand desk from [Fonzel](store.fonzel.com)
 
-~~I use the Logitech K230 Wireless Keyboard and a Logitech M230 Wireless Mouse.~~
-
-After a total of 5 years of the mouse, upgraded to the [Logitech MX Master 2S](https://www.logitech.com/en-in/product/mx-master-2s-flow) ~~and the [TVS Gold Mechanical Keyboard](https://www.tvs-e.in/gold/). I have a plan of upgrading to the Keychron K1 TKL~~ and the [Keychron K1 87 Keys](https://www.keychron.com/products/keychron-k1-wireless-mechanical-keyboard?variant=31253554266201)
+I use the [Logitech MX Master 2S](https://www.logitech.com/en-in/product/mx-master-2s-flow) ~~and the [TVS Gold Mechanical Keyboard](https://www.tvs-e.in/gold/). I have a plan of upgrading to the Keychron K1 TKL~~ and the [Keychron K1 87 Keys](https://www.keychron.com/products/keychron-k1-wireless-mechanical-keyboard?variant=31253554266201)
 
 For audio I primarily use the [Apple AirPods Pro](https://www.apple.com/in/airpods-pro/). I use the [JBL 750BTNC](https://in.jbl.com/TUNE750BTNC.html) incase I want to use a pair of overhead headphones. I also use a pair of FND 2.1 channel and a Google Home Mini.
 
@@ -28,6 +26,8 @@ I wish to upgrade to a setup with:
 <li><del>Dual Monitor Setup with a monitor arm</del></li>
 <li><del>Keychron K1 / Logitech MX Keys</del></li>
 <li><s>Logitech MX Master 2s/3</s></li>
-<li>A custom self built standing desk</li>
-<ol>
+<li>Sony WH1000 XM4</li>
+<li><s>A custom self built standing desk</s></li>
+<li>A 13 inch laptop on Ubuntu</li>
+</ol>
 
