@@ -3,7 +3,7 @@ layout: post
 title:  My Work Setup 
 date: 2020-10-02 13:32:20 +0300
 description: Work from home setup post. Keeps getting updated. # Add post description (optional)
-img: setup2.jpg # Add image post (optional)
+img: setup3.jpg # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags: [Desk Setup]
 ---
