@@ -18,7 +18,7 @@ head to your `.ssh` directory and generate sets of SSH keys for both the account
 To generate a pair of ssg keys, run `ssh-keygen -t rsa`
 Follow the instructions that ask for a file location, name, etc. For the name, I prefer setting something like `id_rsa_work` and `id_rsa_personal` as it is easier to identify (in case I need to someday).
 
-<h3>Manage ssh config file</h3>
+<h3>2. Manage ssh config file</h3>
 There should be a file named `config` in the `.ssh` folder. If not, we need to create one by running `touch config`.
 Edit the config and add the following lines into it:
 ```
@@ -55,7 +55,7 @@ Host github-personal.com
 ```
 And save the file.
 
-<h3>Register the SSH keys on the respective GitHub accounts</h3>
+<h3>3. Register the SSH keys on the respective GitHub accounts</h3>
 This step is to let GitHub identify our machine and authorize it, to avoid typing in the id and password everytime.
 Follow the steps [here](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to add the keys to the respective accounts.
 
