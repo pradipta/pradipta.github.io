@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Aliash for SSHing into hosts 
+title:  Alias for SSHing into hosts 
 date: 2021-08-09 13:32:20 +0300
 description: Use alias to avoid remembering IPs or having to look for them
 tags: [SSH, Terminal, ZSH, Alias]
