@@ -1,0 +1,22 @@
+---
+layout: post
+title:  Aliash for SSHing into hosts 
+date: 2021-08-09 13:32:20 +0300
+description: Use alias to avoid remembering IPs or having to look for them
+tags: [SSH, Terminal, ZSH, Alias]
+---
+
+As part of my work I regularly have to SSH into various hosts to perform some actions or to debug issues.
+Everytime I do it, I head to our internal cloud dashboard to figure out the IP address of the host that I need to SSH into. There are a few hosts for particular services that I SSH into very frequently, almost on a daily basis.
+
+It is not possible to remember IPs, which look like 10.12.13.14.
+
+Assigning a name is easier. I now have created aliases for my most frequently used hosts.
+
+On the /.zshrc file, I added:
+
+`alias ssh-service-env-zone="ssh ipaddress"`
+
+The next time I wish to SSH into `ipaddress`, I can just do a `ssh-service-env-zone`.
+
+This gets even better with `Auto Suggestions and Syntax Highlighting`. For details check out this [blog](https://pradipta.github.io/terminal-setup-on-mac/)
