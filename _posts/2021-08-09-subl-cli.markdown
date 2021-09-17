@@ -1,0 +1,40 @@
+---
+layout: post
+title:  Launch Sublime from the Command Line 
+date: 2021-08-09 13:32:20 +0300
+img: zsh.png
+description: Launch Sublime Text right from the Terminal on MacOS, Linux, or Windows
+tags: [Sublime, Sublime Text, Terminal, ZSH, Alias]
+---
+
+Sublime is a powerful source code editor. It is also used a lot to clip notes and stuff, thanks to it being very light weight.
+As a developer, if you aren't using Sublime yet, I highly recommend you do.
+
+Sublime Text comes with a CLI out of the box. For version 3 or 4, check in the directory `/Applications/Sublime\ Text.app/Contents/SharedSupport/bin`. There should be an executable named `subl`.
+On that directory, try running `./subl` on a the terminal, it should launch Sublime Text for you. Btw, I hope you're using iTerm 2 with ZSH and not the Terminal that comes with Mac, if you're on Mac. If not, check out [this blog](../terminal-setup-on-mac/).
+Now to move to this directory and then executing this command everytime is not of a big help, we create a shortcut for us.
+
+`$PATH` is an env variable that lists all the directories that the OS should look for, for an executable.
+Run `echo $PATH` to check your env value. Pick any directory from there, for instance, I picked `/usr/local/bin`.
+
+You now need to create a link from this directory to the executable. You can do that by running:
+
+`ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/sublime`
+
+This creates a [symbolic link](https://linuxize.com/post/how-to-create-symbolic-links-in-linux-using-the-ln-command/) between two files. For my case, the `/usr/local/bin/sublime` actually points to `/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl`.
+
+With this link being created, you can execute/run `sublime` from anywhere using the Terminal app and it will launch Sublime for you.
+
+Now you can launch sublime from anywhere executing `sublime`, as well as open a particular file by mentioning the file name as well. Example:
+
+```shell
+touch test
+sublime test
+```
+The above commands would create a file named `test` and would open it in Sublime Test.
+
+Sublime CLI also comes in with a lot of other stuff, check `sublime --help` for more.
+
+PS: a lot of sites mention the link command as: `ln -s "<the directory>" <target directory>`, howver, for me, avoiding the quotes worked, and not the other way around.
+
+
