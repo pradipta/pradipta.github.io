@@ -35,6 +35,6 @@ The above commands would create a file named `test` and would open it in Sublime
 
 Sublime CLI also comes in with a lot of other stuff, check `sublime --help` for more.
 
-PS: a lot of sites mention the link command as: `ln -s "<the directory>" <target directory>`, howver, for me, avoiding the quotes worked, and not the other way around.
+PS: a lot of sites mention the link command as: `ln -s "<the directory>" <target directory>`, however, for me, avoiding the quotes worked, and not the other way around.
 
 
