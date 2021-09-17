@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Launch Sublime from the Command Line 
-date: 2021-08-09 13:32:20 +0300
+date: 2021-09-17 13:32:20 +0300
 img: sublime.png
 description: Launch Sublime Text right from the Terminal on MacOS, Linux, or Windows
 tags: [Sublime, Sublime Text, Terminal, ZSH, Alias]
