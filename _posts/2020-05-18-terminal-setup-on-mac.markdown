@@ -3,7 +3,7 @@ layout: post
 title:  Terminal Setup on MacOS 
 date: 2020-05-18 13:32:20 +0300
 description: The terminal on a Mac device sucks. Do this. # Add post description (optional)
-img: sublime.png # Add image post (optional)
+img: zsh.png # Add image post (optional)
 tags: [ZSH, Mac, Termninal]
 ---
 This is what the default terminal looks like on a Mac:
