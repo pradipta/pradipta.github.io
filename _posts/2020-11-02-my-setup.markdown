@@ -34,7 +34,7 @@ I wish to upgrade to a setup with:
 <li>Triple Monitor Setup</li>
 <li><del>Keychron K1 / Logitech MX Keys</del></li>
 <li><s>Logitech MX Master 2s/3</s></li>
-<li><del>Sony WH1000 XM4<del></li>
+<li><del>Sony WH1000 XM4</del></li>
 <li><s>A custom self built standing desk</s></li>
 <li>A 13 inch laptop on Ubuntu</li>
 </ol>
