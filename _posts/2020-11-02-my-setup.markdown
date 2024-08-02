@@ -11,7 +11,7 @@ This is what my current work setup looks like.
 
 My work laptop is a 16" 32 GB Macbook Pro (M1 Pro).
 
-I use the iPhone 12 Pro Max as my primary phone, and I have an iPhone SE as my secondary phone.
+I use the iPhone 12 Pro Max as my primary phone (since December 2020), and I have an iPhone SE as my secondary phone.
 
 I also use the iPad Air 4 10.9" (Wifi) to take notes, attend meetings and watch content.
 
@@ -26,7 +26,7 @@ Keyboard:
 2. [Nuphy Air 75](https://nuphy.com/collections/keyboards/products/air75) with blue switches and [nSA Shine Through Keycaps](https://nuphy.com/collections/keycaps/products/nsa-shine-through-abs-keycaps).
 3. [Royal Kludge RK84 Pro](https://rkgamingstore.com/products/rk84-pro-75-wireless-mechanical-keyboard) with brown switches.
 
-For audio I primarily use the [Apple AirPods Pro](https://www.apple.com/in/airpods-pro/). I use the [Sony WH1000 XM4](https://www.sony.co.in/electronics/headband-headphones/wh-1000xm4) incase I want to use a pair of overhead headphones. I also use a pair of Creative 2.1 channel soundbar on my desk. For microphone and video I use the [Lenovo 300 FHD Webcam](https://www.amazon.in/dp/B08KT89BWX/)
+For audio I primarily use the [Apple AirPods Pro 2nd gen](https://www.apple.com/in/airpods-pro/). I use the [Sony WH1000 XM4](https://www.sony.co.in/electronics/headband-headphones/wh-1000xm4) incase I want to use a pair of overhead headphones. I also use a pair of Creative 2.1 channel soundbar on my desk. For microphone and video I use the [Lenovo 300 FHD Webcam](https://www.amazon.in/dp/B08KT89BWX/)
 
 I wish to upgrade to a setup with:
 <ol>
