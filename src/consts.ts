@@ -15,9 +15,11 @@ export const AUTHOR = {
   linkedin: "pradiptasarma",
 } as const;
 
+import { projects } from "./data/projects";
+
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/blog/", label: "Blog" },
-  { href: "/projects/", label: "Projects" },
+  ...(projects.length > 0 ? [{ href: "/projects/", label: "Projects" }] : []),
   { href: "/about/", label: "About" },
 ] as const;

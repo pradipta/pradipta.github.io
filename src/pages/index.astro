@@ -65,18 +65,22 @@ const homeProjects = projects.slice(0, 3);
       )
     }
 
-    <section class="pb-8">
-      <div class="mb-8 flex items-end justify-between gap-4">
-        <h2 class="font-sans text-2xl font-semibold tracking-tight">Projects</h2>
-        <a href="/projects/" class="text-sm text-[var(--color-muted)] hover:text-[var(--color-accent)]">
-          View all
-        </a>
-      </div>
-      <div>
-        {homeProjects.map((project) => (
-          <ProjectCard project={project} />
-        ))}
-      </div>
-    </section>
+    {
+      homeProjects.length > 0 && (
+        <section class="pb-8">
+          <div class="mb-8 flex items-end justify-between gap-4">
+            <h2 class="font-sans text-2xl font-semibold tracking-tight">Projects</h2>
+            <a href="/projects/" class="text-sm text-[var(--color-muted)] hover:text-[var(--color-accent)]">
+              View all
+            </a>
+          </div>
+          <div>
+            {homeProjects.map((project) => (
+              <ProjectCard project={project} />
+            ))}
+          </div>
+        </section>
+      )
+    }
   </div>
 </BaseLayout>
