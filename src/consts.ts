@@ -7,7 +7,7 @@ export const AUTHOR = {
   name: "Pradipta Sarma",
   role: "Software Engineer",
   tagline: "UX Enthusiast",
-  bio: "Software engineer focused on reliable systems, thoughtful interfaces, and practical developer tooling. I write about Java, Git, terminals, and the setups that keep work moving.",
+  bio: "Software engineer with a passion for building reliable backend systems, designing scalable architectures, and creating software that's easy to operate and maintain. I enjoy solving distributed systems problems, improving developer experience, and exploring the technologies that power modern applications.",
   avatar: "/assets/img/pradipta.jpg",
   email: "pradiptasarma@outlook.com",
   twitter: "sarmapradipta",
