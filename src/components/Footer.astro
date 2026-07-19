@@ -1,0 +1,43 @@
+---
+import { AUTHOR } from "../consts";
+---
+
+<footer class="border-t border-[var(--color-border)] py-10">
+  <div
+    class="container-page flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p class="text-sm text-[var(--color-muted)]">
+      © {new Date().getFullYear()} {AUTHOR.name}
+    </p>
+    <ul class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+      <li>
+        <a
+          class="text-[var(--color-muted)] hover:text-[var(--color-fg)]"
+          href="/rss.xml">RSS</a
+        >
+      </li>
+      <li>
+        <a
+          class="text-[var(--color-muted)] hover:text-[var(--color-fg)]"
+          href={`https://github.com/${AUTHOR.github}`}
+          target="_blank"
+          rel="noopener noreferrer">GitHub</a
+        >
+      </li>
+      <li>
+        <a
+          class="text-[var(--color-muted)] hover:text-[var(--color-fg)]"
+          href={`https://www.linkedin.com/in/${AUTHOR.linkedin}`}
+          target="_blank"
+          rel="noopener noreferrer">LinkedIn</a
+        >
+      </li>
+      <li>
+        <a
+          class="text-[var(--color-muted)] hover:text-[var(--color-fg)]"
+          href={`mailto:${AUTHOR.email}`}>Email</a
+        >
+      </li>
+    </ul>
+  </div>
+</footer>

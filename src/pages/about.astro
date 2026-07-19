@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import { AUTHOR } from "../consts";
+---
+
+<BaseLayout
+  title="About"
+  description={`About ${AUTHOR.name} — ${AUTHOR.role} and ${AUTHOR.tagline}.`}
+>
+  <div class="container-page">
+    <div class="mx-auto max-w-2xl">
+      <header class="flex flex-col gap-6 sm:flex-row sm:items-end">
+        <img
+          src={AUTHOR.avatar}
+          alt={AUTHOR.name}
+          class="h-28 w-28 rounded-full object-cover ring-1 ring-[var(--color-border)]"
+          width="112"
+          height="112"
+          loading="eager"
+          decoding="async"
+        />
+        <div>
+          <h1 class="font-sans text-3xl font-semibold tracking-tight sm:text-4xl">
+            About
+          </h1>
+          <p class="mt-2 text-[var(--color-muted)]">
+            {AUTHOR.role} · {AUTHOR.tagline}
+          </p>
+        </div>
+      </header>
+
+      <div class="prose-blog mt-10">
+        <p>{AUTHOR.bio}</p>
+        <p>
+          Previously at upGrad as a Software Engineer, then joined Flipkart as an
+          SDE 2 on the Fintech and Payments group — working on Buy Now Pay Later.
+          I care about clear systems, good developer experience, and interfaces that
+          feel intentional.
+        </p>
+        <p>
+          Outside of work you’ll find me refining desk setups, tinkering with
+          terminals, and writing down the small things that make day-to-day engineering
+          smoother.
+        </p>
+      </div>
+
+      <div class="mt-10">
+        <h2 class="mb-4 font-sans text-lg font-semibold tracking-tight">Connect</h2>
+        <SocialLinks />
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,44 @@
+---
+---
+
+<script>
+  function enhanceCodeBlocks() {
+    document.querySelectorAll(".prose-blog pre").forEach((pre) => {
+      if (!(pre instanceof HTMLElement)) return;
+      if (pre.parentElement?.classList.contains("code-block")) return;
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "code-block group relative";
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className =
+        "absolute right-3 top-3 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-2 py-1 text-xs text-[var(--color-muted)] opacity-0 transition-opacity group-hover:opacity-100 focus:opacity-100";
+      button.textContent = "Copy";
+      button.setAttribute("aria-label", "Copy code");
+
+      button.addEventListener("click", async () => {
+        const code = pre.querySelector("code")?.textContent ?? pre.textContent ?? "";
+        try {
+          await navigator.clipboard.writeText(code);
+          button.textContent = "Copied";
+          setTimeout(() => {
+            button.textContent = "Copy";
+          }, 1600);
+        } catch {
+          button.textContent = "Failed";
+          setTimeout(() => {
+            button.textContent = "Copy";
+          }, 1600);
+        }
+      });
+
+      wrapper.appendChild(button);
+    });
+  }
+
+  enhanceCodeBlocks();
+  document.addEventListener("astro:page-load", enhanceCodeBlocks);
+</script>

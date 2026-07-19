@@ -1,0 +1,43 @@
+---
+import { AUTHOR } from "../consts";
+
+const links = [
+  {
+    label: "GitHub",
+    href: `https://github.com/${AUTHOR.github}`,
+    external: true,
+  },
+  {
+    label: "LinkedIn",
+    href: `https://www.linkedin.com/in/${AUTHOR.linkedin}`,
+    external: true,
+  },
+  {
+    label: "Twitter",
+    href: `https://twitter.com/${AUTHOR.twitter}`,
+    external: true,
+  },
+  {
+    label: "Email",
+    href: `mailto:${AUTHOR.email}`,
+    external: false,
+  },
+] as const;
+---
+
+<ul class="flex flex-wrap gap-3">
+  {
+    links.map((link) => (
+      <li>
+        <a
+          href={link.href}
+          class="inline-flex items-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-3.5 py-2 text-sm text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+          target={link.external ? "_blank" : undefined}
+          rel={link.external ? "noopener noreferrer" : undefined}
+        >
+          {link.label}
+        </a>
+      </li>
+    ))
+  }
+</ul>

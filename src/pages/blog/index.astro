@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostCard from "../../components/PostCard.astro";
+import { getPublishedPosts } from "../../utils/posts";
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout
+  title="Blog"
+  description="Notes on Java, developer tooling, terminals, Git, and building reliable software."
+>
+  <div class="container-page">
+    <header class="mb-10 max-w-2xl">
+      <h1 class="font-sans text-3xl font-semibold tracking-tight sm:text-4xl">Blog</h1>
+      <p class="mt-3 text-[var(--color-muted)] leading-relaxed">
+        Practical notes from shipping software — tooling, Java, terminals, and setups.
+      </p>
+      <p class="mt-4">
+        <a href="/tags/" class="text-sm text-[var(--color-accent)] hover:underline">
+          Browse by tag
+        </a>
+      </p>
+    </header>
+
+    <div>
+      {posts.map((post) => <PostCard post={post} featured={Boolean(post.data.img)} />)}
+    </div>
+  </div>
+</BaseLayout>

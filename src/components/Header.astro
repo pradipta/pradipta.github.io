@@ -1,0 +1,95 @@
+---
+import { NAV_LINKS, SITE_TITLE } from "../consts";
+import ThemeToggle from "./ThemeToggle.astro";
+
+const pathname = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href);
+}
+---
+
+<header
+  class="fixed inset-x-0 top-0 z-40 border-b border-[var(--color-border)]/80 bg-[color-mix(in_oklab,var(--color-bg)_85%,transparent)] backdrop-blur-md"
+>
+  <div class="container-page flex h-16 items-center justify-between gap-4">
+    <a
+      href="/"
+      class="font-sans text-base font-semibold tracking-tight text-[var(--color-fg)] hover:text-[var(--color-accent)]"
+    >
+      {SITE_TITLE}
+    </a>
+
+    <nav class="hidden items-center gap-1 sm:flex" aria-label="Primary">
+      {
+        NAV_LINKS.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              "rounded-md px-3 py-2 text-sm transition-colors",
+              isActive(link.href)
+                ? "bg-[var(--color-accent-soft)] text-[var(--color-accent)] font-medium"
+                : "text-[var(--color-muted)] hover:text-[var(--color-fg)]",
+            ]}
+            aria-current={isActive(link.href) ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <ThemeToggle />
+    </nav>
+
+    <div class="flex items-center gap-2 sm:hidden">
+      <ThemeToggle />
+      <button
+        type="button"
+        id="menu-toggle"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-[var(--color-border)] text-[var(--color-fg)]"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Open menu"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <nav
+    id="mobile-nav"
+    class="hidden border-t border-[var(--color-border)] bg-[var(--color-bg)] sm:hidden"
+    aria-label="Mobile"
+  >
+    <div class="container-page flex flex-col gap-1 py-3">
+      {
+        NAV_LINKS.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              "rounded-md px-3 py-2.5 text-sm",
+              isActive(link.href)
+                ? "bg-[var(--color-accent-soft)] text-[var(--color-accent)] font-medium"
+                : "text-[var(--color-muted)]",
+            ]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const nav = document.getElementById("mobile-nav");
+
+  toggle?.addEventListener("click", () => {
+    const open = nav?.classList.toggle("hidden") === false;
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  });
+</script>
