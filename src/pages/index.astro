@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PostCard from "../components/PostCard.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import { AUTHOR, SITE_DESCRIPTION } from "../consts";
+import { projects } from "../data/projects";
+import { getPublishedPosts } from "../utils/posts";
+
+const posts = await getPublishedPosts();
+const featured = posts.filter((p) => p.data.featured).slice(0, 3);
+const latest = posts.slice(0, 5);
+const featuredIds = new Set(featured.map((p) => p.id));
+const latestUnique = latest.filter((p) => !featuredIds.has(p.id)).slice(0, 4);
+const homeProjects = projects.slice(0, 3);
+---
+
+<BaseLayout title={AUTHOR.name} description={SITE_DESCRIPTION}>
+  <div class="container-page">
+    <section class="pb-16 pt-6 sm:pb-20 sm:pt-10">
+      <p class="text-sm font-medium uppercase tracking-[0.18em] text-[var(--color-muted)]">
+        {AUTHOR.role}
+      </p>
+      <h1 class="mt-4 max-w-3xl font-sans text-4xl font-semibold tracking-tight sm:text-5xl sm:leading-[1.1]">
+        {AUTHOR.name}
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-[var(--color-muted)]">
+        {AUTHOR.bio}
+      </p>
+      <div class="mt-8">
+        <SocialLinks />
+      </div>
+    </section>
+
+    {
+      featured.length > 0 && (
+        <section class="pb-16">
+          <div class="mb-8 flex items-end justify-between gap-4">
+            <h2 class="font-sans text-2xl font-semibold tracking-tight">Featured</h2>
+            <a href="/blog/" class="text-sm text-[var(--color-muted)] hover:text-[var(--color-accent)]">
+              All posts
+            </a>
+          </div>
+          <div>
+            {featured.map((post) => (
+              <PostCard post={post} featured />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      latestUnique.length > 0 && (
+        <section class="pb-16">
+          <div class="mb-8 flex items-end justify-between gap-4">
+            <h2 class="font-sans text-2xl font-semibold tracking-tight">Latest</h2>
+          </div>
+          <div>
+            {latestUnique.map((post) => (
+              <PostCard post={post} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      homeProjects.length > 0 && (
+        <section class="pb-8">
+          <div class="mb-8 flex items-end justify-between gap-4">
+            <h2 class="font-sans text-2xl font-semibold tracking-tight">Projects</h2>
+            <a href="/projects/" class="text-sm text-[var(--color-muted)] hover:text-[var(--color-accent)]">
+              View all
+            </a>
+          </div>
+          <div>
+            {homeProjects.map((project) => (
+              <ProjectCard project={project} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+</BaseLayout>

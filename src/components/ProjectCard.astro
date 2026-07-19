@@ -1,0 +1,40 @@
+---
+import type { Project } from "../data/projects";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="border-b border-[var(--color-border)] py-8 first:pt-0 last:border-b-0">
+  <div class="flex flex-wrap items-baseline justify-between gap-2">
+    <h3 class="font-sans text-xl font-semibold tracking-tight">
+      {
+        project.href ? (
+          <a href={project.href} class="hover:text-[var(--color-accent)]">
+            {project.title}
+          </a>
+        ) : (
+          project.title
+        )
+      }
+    </h3>
+    {
+      project.year && (
+        <span class="text-sm text-[var(--color-muted)]">{project.year}</span>
+      )
+    }
+  </div>
+  <p class="mt-2 max-w-2xl text-[var(--color-muted)] leading-relaxed">
+    {project.description}
+  </p>
+  <ul class="mt-4 flex flex-wrap gap-2">
+    {
+      project.tags.map((tag) => (
+        <li class="text-xs text-[var(--color-muted)]">#{tag}</li>
+      ))
+    }
+  </ul>
+</article>

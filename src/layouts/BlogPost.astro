@@ -1,0 +1,89 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import TableOfContents from "../components/TableOfContents.astro";
+import PostNav from "../components/PostNav.astro";
+import TagList from "../components/TagList.astro";
+import type { BlogPost } from "../utils/posts";
+import { formatDate, getReadingTime } from "../utils/readingTime";
+
+interface Props {
+  post: BlogPost;
+  headings: { depth: number; slug: string; text: string }[];
+  prev?: BlogPost;
+  next?: BlogPost;
+}
+
+const { post, headings, prev, next } = Astro.props;
+const { title, description, date, img, figCaption, tags } = post.data;
+const readingTime = getReadingTime(post.body ?? "");
+const cover = img ? `/assets/img/${img}` : undefined;
+---
+
+<BaseLayout
+  title={title}
+  description={description || title}
+  image={cover}
+  type="article"
+  publishedTime={date}
+  tags={tags}
+>
+  <div class="container-page">
+    <div class="mx-auto max-w-6xl xl:grid xl:grid-cols-[minmax(0,1fr)_220px] xl:gap-12">
+      <article>
+        <header class="mx-auto max-w-3xl">
+          <p class="flex flex-wrap items-center gap-x-2 text-sm text-[var(--color-muted)]">
+            <time datetime={date.toISOString()}>{formatDate(date)}</time>
+            <span aria-hidden="true">·</span>
+            <span>{readingTime} min read</span>
+          </p>
+          <h1 class="mt-4 font-sans text-3xl font-semibold tracking-tight sm:text-4xl sm:leading-tight">
+            {title}
+          </h1>
+          {
+            description && (
+              <p class="mt-4 text-lg text-[var(--color-muted)] leading-relaxed">
+                {description}
+              </p>
+            )
+          }
+          <div class="mt-6">
+            <TagList tags={tags} />
+          </div>
+        </header>
+
+        {
+          cover && (
+            <figure class="mx-auto mt-10 max-w-3xl overflow-hidden rounded-xl border border-[var(--color-border)]">
+              <img
+                src={cover}
+                alt={figCaption || title}
+                class="h-auto w-full object-cover"
+                loading="eager"
+                decoding="async"
+              />
+              {figCaption && (
+                <figcaption class="border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-4 py-3 text-center text-sm text-[var(--color-muted)]">
+                  {figCaption}
+                </figcaption>
+              )}
+            </figure>
+          )
+        }
+
+        <div class="prose-blog mx-auto mt-10 max-w-3xl">
+          <slot />
+        </div>
+
+        <div class="mx-auto max-w-3xl">
+          <PostNav prev={prev} next={next} />
+        </div>
+      </article>
+
+      <aside class="pt-2">
+        <div class="xl:sticky xl:top-24">
+          <TableOfContents headings={headings} />
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

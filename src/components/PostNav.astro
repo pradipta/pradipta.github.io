@@ -1,0 +1,46 @@
+---
+import type { BlogPost } from "../utils/posts";
+import { getPostPath } from "../utils/posts";
+
+interface Props {
+  prev?: BlogPost;
+  next?: BlogPost;
+}
+
+const { prev, next } = Astro.props;
+---
+
+{
+  (prev || next) && (
+    <nav
+      class="mt-14 grid gap-6 border-t border-[var(--color-border)] pt-10 sm:grid-cols-2"
+      aria-label="Post navigation"
+    >
+      {prev ? (
+        <a href={getPostPath(prev)} class="group block rounded-lg p-1 -m-1">
+          <p class="text-xs uppercase tracking-wider text-[var(--color-muted)]">
+            Previous
+          </p>
+          <p class="mt-1 font-medium group-hover:text-[var(--color-accent)]">
+            {prev.data.title}
+          </p>
+        </a>
+      ) : (
+        <div />
+      )}
+      {next && (
+        <a
+          href={getPostPath(next)}
+          class="group block rounded-lg p-1 -m-1 sm:text-right"
+        >
+          <p class="text-xs uppercase tracking-wider text-[var(--color-muted)]">
+            Next
+          </p>
+          <p class="mt-1 font-medium group-hover:text-[var(--color-accent)]">
+            {next.data.title}
+          </p>
+        </a>
+      )}
+    </nav>
+  )
+}

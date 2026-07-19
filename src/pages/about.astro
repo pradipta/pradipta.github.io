@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import { AUTHOR } from "../consts";
+---
+
+<BaseLayout
+  title="About"
+  description={`About ${AUTHOR.name} — ${AUTHOR.role} and ${AUTHOR.tagline}.`}
+>
+  <div class="container-page">
+    <div class="mx-auto max-w-2xl">
+      <header class="flex flex-col gap-6 sm:flex-row sm:items-end">
+        <img
+          src={AUTHOR.avatar}
+          alt={AUTHOR.name}
+          class="h-28 w-28 rounded-full object-cover ring-1 ring-[var(--color-border)]"
+          width="112"
+          height="112"
+          loading="eager"
+          decoding="async"
+        />
+        <div>
+          <h1 class="font-sans text-3xl font-semibold tracking-tight sm:text-4xl">
+            About
+          </h1>
+          <p class="mt-2 text-[var(--color-muted)]">
+            {AUTHOR.role} · {AUTHOR.tagline}
+          </p>
+        </div>
+      </header>
+
+      <div class="prose-blog mt-10">
+        <p>{AUTHOR.bio}</p>
+        <p>
+            This blog is where I share what I learn along the way—covering Java, system design, cloud infrastructure, Git, Linux, developer tooling, and the occasional deep dive into side projects.
+        </p>
+        <p>
+            Over the years, I've worked across infrastructure, search, and fintech at Uber, AWS, Flipkart, and upGrad, building systems that serve millions of users at scale.
+        </p>
+        <p>
+            When I'm away from the keyboard, you'll probably find me traveling, photographing new places, reading science fiction, or building something simply because it sounded like an interesting idea.
+        </p>
+      </div>
+
+      <div class="mt-10">
+        <h2 class="mb-4 font-sans text-lg font-semibold tracking-tight">Connect</h2>
+        <SocialLinks />
+      </div>
+    </div>
+  </div>
+</BaseLayout>

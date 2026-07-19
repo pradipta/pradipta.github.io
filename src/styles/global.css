@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Newsreader", ui-serif, Georgia, Cambria, "Times New Roman",
+    Times, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
+
+  --color-bg: #f7f7f5;
+  --color-bg-elevated: #ffffff;
+  --color-fg: #171717;
+  --color-muted: #5c5c5c;
+  --color-border: #e8e8e4;
+  --color-accent: #1d4ed8;
+  --color-accent-soft: #eff4ff;
+  --color-code-bg: #f0f0ec;
+}
+
+html.dark {
+  --color-bg: #0b0b0b;
+  --color-bg-elevated: #141414;
+  --color-fg: #f2f2f2;
+  --color-muted: #a3a3a3;
+  --color-border: #262626;
+  --color-accent: #93c5fd;
+  --color-accent-soft: #152033;
+  --color-code-bg: #1a1a1a;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-[var(--color-bg)] text-[var(--color-fg)] font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 28%, transparent);
+  }
+
+  a {
+    @apply transition-colors duration-150;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-[var(--color-accent)];
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-5xl px-5 sm:px-8;
+  }
+
+  .prose-blog {
+    @apply font-serif text-[1.0625rem] leading-8 text-[var(--color-fg)] sm:text-[1.125rem] sm:leading-8;
+  }
+
+  .prose-blog h2,
+  .prose-blog h3,
+  .prose-blog h4 {
+    @apply font-sans font-semibold tracking-tight scroll-mt-28;
+  }
+
+  .prose-blog h2 {
+    @apply mt-12 mb-4 text-2xl;
+  }
+
+  .prose-blog h3 {
+    @apply mt-8 mb-3 text-xl;
+  }
+
+  .prose-blog h4 {
+    @apply mt-6 mb-2 text-lg;
+  }
+
+  .prose-blog p {
+    @apply my-5;
+  }
+
+  .prose-blog a {
+    @apply text-[var(--color-accent)] underline decoration-[color-mix(in_oklab,var(--color-accent)_40%,transparent)] underline-offset-4 hover:decoration-[var(--color-accent)];
+  }
+
+  .prose-blog strong {
+    @apply font-semibold;
+  }
+
+  .prose-blog ul,
+  .prose-blog ol {
+    @apply my-5 pl-6;
+  }
+
+  .prose-blog ul {
+    @apply list-disc;
+  }
+
+  .prose-blog ol {
+    @apply list-decimal;
+  }
+
+  .prose-blog li {
+    @apply my-2;
+  }
+
+  .prose-blog blockquote {
+    @apply my-8 border-l-2 border-[var(--color-accent)] pl-5 italic text-[var(--color-muted)];
+  }
+
+  .prose-blog hr {
+    @apply my-10 border-[var(--color-border)];
+  }
+
+  .prose-blog img {
+    @apply my-8 h-auto w-full rounded-lg;
+  }
+
+  .prose-blog figure {
+    @apply my-8;
+  }
+
+  .prose-blog figcaption {
+    @apply mt-3 text-center font-sans text-sm text-[var(--color-muted)];
+  }
+
+  .prose-blog code {
+    @apply rounded bg-[var(--color-code-bg)] px-1.5 py-0.5 font-mono text-[0.875em];
+  }
+
+  .prose-blog pre {
+    @apply my-6 overflow-x-auto rounded-xl border border-[var(--color-border)] bg-[var(--color-code-bg)] p-4 font-mono text-sm leading-6;
+  }
+
+  .prose-blog pre code {
+    @apply bg-transparent p-0 text-[0.9rem];
+  }
+
+  .prose-blog .heading-anchor {
+    @apply ml-2 font-sans text-sm font-normal text-[var(--color-muted)] no-underline opacity-0 transition-opacity;
+  }
+
+  .prose-blog h2:hover .heading-anchor,
+  .prose-blog h3:hover .heading-anchor,
+  .prose-blog h4:hover .heading-anchor,
+  .prose-blog .heading-anchor:focus-visible {
+    @apply opacity-100;
+  }
+
+  /* Dual-theme Shiki */
+  .prose-blog pre .dark,
+  html.dark .prose-blog pre .light {
+    display: none;
+  }
+
+  html.dark .prose-blog pre .dark {
+    display: inherit;
+  }
+}
+
+/* Soft page atmosphere */
+.page-atmosphere {
+  background-image:
+    radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      color-mix(in oklab, var(--color-accent) 12%, transparent),
+      transparent
+    ),
+    linear-gradient(
+      to bottom,
+      transparent,
+      color-mix(in oklab, var(--color-bg) 80%, var(--color-border))
+    );
+  background-attachment: fixed;
+}

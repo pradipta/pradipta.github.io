@@ -1,0 +1,26 @@
+---
+import { slugifyTag } from "../utils/posts";
+
+interface Props {
+  tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+
+{
+  tags.length > 0 && (
+    <ul class="flex flex-wrap gap-2">
+      {tags.map((tag) => (
+        <li>
+          <a
+            href={`/tags/${slugifyTag(tag)}/`}
+            class="inline-flex rounded-md border border-[var(--color-border)] px-2.5 py-1 text-xs text-[var(--color-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+          >
+            #{tag}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
