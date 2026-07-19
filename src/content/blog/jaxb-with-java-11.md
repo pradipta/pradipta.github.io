@@ -1,60 +1,86 @@
 ---
-title: "A Problem with JJWT With Java 11 (9+)"
+title: "JJWT on Java 11+: ClassNotFoundException for DatatypeConverter"
 date: 2020-11-13 13:32:20 +0300
-description: "A probelm with parsing JWT signed with a base 64 encoded secret with JAVA 11"
+updatedDate: 2026-07-19
+description: "Old JJWT versions call javax.xml.bind.DatatypeConverter for Base64. On Java 11+ that class is gone — upgrade JJWT and use java.util.Base64."
 img: jaxb.jpg
-tags: [Java, JDK, JJWT, Spring, JAXB, SpringBoot]
+tags: [Java, JDK, JJWT, Spring, SpringBoot]
 ---
-I was implementing Spring Security for a service I am working on for work. The project is based on Java 11 and the Spring Boot Framework.
-Usign the JWT token, I was supposed to extract user details and roles. The JWT is signed using a secret key with has been stored in properties encoded in base 64.
-```Java
-Jwts.parser().setSigningKey(appProperties.getAuth().getTokenSecret()).parseClaimsJws(authToken);
-```
-The above code is used to validate the JWT's authenticity.
 
-The `setSigningKey(...)` method looks like:
+While wiring Spring Security on a Java 11 service, JWT validation blew up when parsing tokens signed with a Base64-encoded secret. The same JJWT version worked on our Java 8 services.
+
+## What failed
+
 ```java
-    public JwtParser setSigningKey(String base64EncodedKeyBytes) {
-        Assert.hasText(base64EncodedKeyBytes, "signing key cannot be null or empty.");
-        this.keyBytes = TextCodec.BASE64.decode(base64EncodedKeyBytes);
-        return this;
-    }
+Jwts.parser()
+    .setSigningKey(appProperties.getAuth().getTokenSecret())
+    .parseClaimsJws(authToken);
 ```
 
-This method throws an error when it tries to decode the encoded key.
-Logs:
+The overload that takes a `String` treated the value as Base64 and decoded it roughly like this (JJWT 0.5):
+
+```java
+public JwtParser setSigningKey(String base64EncodedKeyBytes) {
+    Assert.hasText(base64EncodedKeyBytes, "signing key cannot be null or empty.");
+    this.keyBytes = TextCodec.BASE64.decode(base64EncodedKeyBytes);
+    return this;
+}
+```
+
+Stack trace:
+
 ```
 java.lang.ClassNotFoundException: javax.xml.bind.DatatypeConverter
-	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:606) ~[na:na]
-	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:168) ~[na:na]
-	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:522) ~[na:na]
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:606)
+	...
 	at io.jsonwebtoken.impl.Base64Codec.decode(Base64Codec.java:26) ~[jjwt-0.5.jar:0.5]
 	at io.jsonwebtoken.impl.DefaultJwtParser.setSigningKey(DefaultJwtParser.java:71) ~[jjwt-0.5.jar:0.5]
 ```
 
-However, the same Library was being used on other projects I/my team had worked on written in Java 8. There, the decode method calls an api from `jaxb`, but I obserrved that on the Java 11 project, it wasn't the case. Even with exact same version of `jjwt`.
+JJWT's Base64 helper called `javax.xml.bind.DatatypeConverter`. That class lived in the JDK through Java 8. From Java 9 it was modularized as Java EE API surface, and **Java 11 removed it from the JDK entirely**. Same library version, different runtime — different classpath.
 
-The problem lies with JJWT with Java 11 (or any after Java 8).
+This is not really a "Spring + JAXB" problem. It is an **old JJWT + modern JDK** problem.
 
-The `jaxb` APIs are considered to be Java EE APIs. The API is completely removed from the Java 11 SDK. With the introduction of modules since Java 9, the `java.se` module is available on the default classpath, and it doesn't include Java EE APIs.
+## Preferred fix: upgrade JJWT
 
-To fix the same, you can pass `--add-modules java.xml.bind` as a command line argument.
-A better fix is to add the `jaxb` API as a Maven/Gradle dependancy.
+Move off `0.5`-era JJWT. Current JJWT uses `java.util.Base64` (or accepts keys/bytes without going through JAXB). Prefer passing a proper `Key` (or decoded bytes) instead of relying on a string overload that assumes Base64:
 
-```maven
-<!-- Runtime, com.sun.xml.bind module -->
+```java
+byte[] keyBytes = Base64.getDecoder().decode(appProperties.getAuth().getTokenSecret());
+SecretKey key = Keys.hmacShaKeyFor(keyBytes);
+
+Jwts.parserBuilder()
+    .setSigningKey(key)
+    .build()
+    .parseClaimsJws(authToken);
+```
+
+(Exact builder API depends on your JJWT major version — check the [JJWT docs](https://github.com/jwtk/jjwt) for the release you pin.)
+
+Upgrading also gets you fixes and a maintained security surface. Pinning `0.5` forever is the wrong long-term answer.
+
+## Fallback: restore JAXB on the classpath
+
+If you cannot upgrade yet, you can put JAXB back on the runtime classpath so `DatatypeConverter` resolves again:
+
+```xml
 <dependency>
-    <groupId>org.glassfish.jaxb</groupId>
-    <artifactId>jaxb-runtime</artifactId>
-    <version>{version}</version>
+  <groupId>org.glassfish.jaxb</groupId>
+  <artifactId>jaxb-runtime</artifactId>
+  <version><!-- pin a current release --></version>
 </dependency>
 ```
-```
-compile group: 'javax.xml.bind', name: 'jaxb-api', version: '{version}'
-```
-This makes `jaxb` APIs available in the classpath and the above problem gets fixed.
 
-Sources:
-<li><a href="https://stackoverflow.com/questions/43574426/java-how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexceptio">Link 1 | StackOverflow</a></li>
-<li><a href="https://www.programmersought.com/article/57492225148/">Link 2 | ProgrammerSought Blog</a></li>
-<li><a href="https://github.com/jwtk/jjwt/issues/317">Link 3 | GitHub</a></li>
+Or the API jar alone, depending on what the old codec needs:
+
+```groovy
+implementation 'javax.xml.bind:jaxb-api:<version>'
+```
+
+`--add-modules java.xml.bind` only helps on JDKs that still ship the module (Java 9/10). It is not a Java 11+ solution.
+
+Treat this as a bridge, not the destination. You are papering over a dependency that still assumes a Java 8 JDK layout.
+
+## Takeaway
+
+When a library fails only after a JDK upgrade, check whether it reaches into removed EE APIs (`javax.xml.bind`, `javax.annotation`, and friends). Fix the library version and call sites first; re-adding EE jars is for locked dependency trees.

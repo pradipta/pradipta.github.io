@@ -1,63 +1,123 @@
 ---
 title: "Manage Multiple Git Accounts on a Computer"
 date: 2021-06-08 13:32:20 +0300
-description: "Want to use a Git account for work and one for personal projects? Here's how."
+updatedDate: 2026-07-19
+description: "Use separate SSH keys, Host aliases, and conditional gitconfig so work and personal GitHub accounts coexist cleanly."
 img: multiple-git.jpg
-tags: [Git, Github, Mac, Terminal]
+tags: [Git, GitHub, Mac, Terminal]
 ---
-I recently started working for a company that uses GitHub Enterprise for their Git solution. I set my work laptop and it's terminal to use that GitHub account and git credentials to manage git on my computer.
-I also wanted to work on my personal projects which I have maintained on my GitHub account. The process to maintain multiple Git accounts on a single machine was straightforward but I wasn't aware of the how-tos.
 
-I looked up upon it a little and got it to work. If you're looking for the same, here's how:
+Work often means GitHub Enterprise (or a company GitHub org) on one account, and personal repos on another. One machine, two identities. The reliable pattern is: **separate SSH keys**, **SSH `Host` aliases**, and **git config that sets the right name/email per directory**.
 
-*(The commands and directories are according to a Mac computer. Things might change on a Linux or a Windows, but the job to be done remains the same, please look uiip for the right commands in that case.)*
-<h3>1. Generate separate SSH Keys for both (or more?) accounts</h3>
-head to your `.ssh` directory and generate sets of SSH keys for both the accounts. This can be ignored for the accounts which already have a pair generated. This was true for my case as I had already set up my work account.
-To generate a pair of ssg keys, run `ssh-keygen -t rsa`
-Follow the instructions that ask for a file location, name, etc. For the name, I prefer setting something like `id_rsa_work` and `id_rsa_personal` as it is easier to identify (in case I need to someday).
+Commands below assume macOS (or Linux with the same OpenSSH layout). Windows is the same idea via a different path to `.ssh`.
 
-<h3>2. Manage ssh config file</h3>
-There should be a file named `config` in the `.ssh` folder. If not, we need to create one by running `touch config`.
-Edit the config and add the following lines into it:
-```
-#work account
-Host github<-identifier>.com
-   HostName <enterprice github host>
-   User git
-   IdentityFile ~/.ssh/id_rsa_work
-   IdentitiesOnly yes
+## 1. Generate separate SSH keys
 
-#personal account
-Host github<-identifier>.com
-   HostName github.com
-   User git
-   IdentityFile ~/.ssh/id_rsa_personal
-   IdentitiesOnly yes
+```bash
+cd ~/.ssh
+ssh-keygen -t ed25519 -C "work@example.com" -f id_ed25519_work
+ssh-keygen -t ed25519 -C "you@personal.example" -f id_ed25519_personal
 ```
 
-Example config:
+Skip generation for any account that already has a key. Prefer Ed25519 unless a host still requires RSA.
+
+Add each **public** key (`.pub`) to the matching GitHub / Enterprise account: [Adding a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
+
+## 2. SSH config with Host aliases
+
+Create or edit `~/.ssh/config`:
+
+```text
+# Work (GitHub Enterprise example)
+Host github-work
+  HostName github.mycompany.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_work
+  IdentitiesOnly yes
+
+# Personal (github.com)
+Host github-personal
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_personal
+  IdentitiesOnly yes
 ```
-#pradipta-sarma account
-Host github.com
-   HostName xyz.github.com
-   User git
-   IdentityFile ~/.ssh/id_rsa_work
-   IdentitiesOnly yes
 
-#pradipta account
-Host github-personal.com
-   HostName github.com
-   User git
-   IdentityFile ~/.ssh/id_rsa_personal
-   IdentitiesOnly yes
+Important details:
+
+- `Host` is an **alias you invent**. It is not the real hostname.
+- `HostName` is what SSH actually connects to.
+- `IdentitiesOnly yes` stops ssh-agent from offering the wrong key first.
+
+### Clone and remote URLs must use the alias
+
+Personal:
+
+```bash
+git clone git@github-personal:USERNAME/REPO.git
 ```
-And save the file.
 
-<h3>3. Register the SSH keys on the respective GitHub accounts</h3>
-This step is to let GitHub identify our machine and authorize it, to avoid typing in the id and password everytime.
-Follow the steps [here](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to add the keys to the respective accounts.
+Work:
 
-To avoid using the work account on a clone for a personal repo, you can change a clone from:
-`git clone git@github.com:user/repo.git` to `git clone git@github-personal.com:user/repo.git`
+```bash
+git clone git@github-work:ORG/REPO.git
+```
 
-With this, you're good to go. Let me know if there's an issue or if I have missed something.
+A remote of `git@github.com:...` will **not** use the `github-personal` block. Rewrite existing remotes:
+
+```bash
+git remote set-url origin git@github-personal:USERNAME/REPO.git
+```
+
+## 3. Commit identity: name and email
+
+SSH picks the account for push/pull. **Commit author** is separate — it comes from `user.name` / `user.email`. Wrong email on a work commit is a common footgun.
+
+### Per-repo (fine for a few clones)
+
+```bash
+git config user.name "Your Name"
+git config user.email "you@company.com"
+```
+
+### Conditional includes (better for many repos)
+
+Keep work and personal trees in different parent directories, then in `~/.gitconfig`:
+
+```ini
+[user]
+  name = Your Name
+  email = you@personal.example
+
+[includeIf "gitdir:~/work/"]
+  path = ~/.gitconfig-work
+
+[includeIf "gitdir:~/personal/"]
+  path = ~/.gitconfig-personal
+```
+
+`~/.gitconfig-work`:
+
+```ini
+[user]
+  email = you@company.com
+```
+
+`~/.gitconfig-personal`:
+
+```ini
+[user]
+  email = you@personal.example
+```
+
+Any repo under `~/work/` picks up the work email automatically.
+
+## Sanity checks
+
+```bash
+ssh -T git@github-personal
+ssh -T git@github-work
+git config --show-origin --get user.email
+```
+
+You should see the expected "Hi username!" greeting for each host, and the email that matches the directory you are in.

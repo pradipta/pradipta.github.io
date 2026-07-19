@@ -2,62 +2,83 @@
 featured: true
 title: "Mongock, Mongo and Java"
 date: 2020-11-29 13:32:20 +0300
-description: "Database Migration to Mongo DB on Java using Mongock"
+updatedDate: 2026-07-19
+description: "Run MongoDB schema and data migrations from Java with Mongock: when to use it, how changesets work, and what to get right."
 img: mongock.png
 tags: [Java, Spring, Mongo, MongoDB, Mongock, SpringBoot]
 ---
-Database Migration tools are essential with applications where you need to migrate data into a database, change a schema, update a record/document across all environments and where it is tedious to do it manually (_almost always?_). These can also help you with keeping a track of the changes made, just like version control.
 
-With Java there are various libraries you can use for the purpose. There's [Liquibase](https://www.liquibase.org/), [Flyway](https://flywaydb.org/), [Mongock](https://github.com/cloudyrock/mongock) and maybe more.
+Schema and data migrations belong in version control and in the deploy path — not as one-off scripts someone remembers to run. For relational databases, Flyway and Liquibase are the usual choices. For MongoDB, [Mongock](https://www.mongock.io/) fills a similar role: Java (or Kotlin) changesets that run with the application and record what has already been applied.
 
-When using MongoDB as the database for the application, I found that Mongock would be the best to go for.
+[Mongobee](https://github.com/mongobee/mongobee), an earlier tool in this space, is unmaintained. Prefer Mongock for new work.
 
-[Mongobee](https://github.com/mongobee/mongobee) seems to be outdated and not being maintained anymore.
+## When Mongock fits
 
-To use the same with Java, you would need the following dependencies (in addition to the Mongo Java Driver/Spring Mongo data that you'd use to set up the application anyways):
-* [Mongock BOM](https://mvnrepository.com/artifact/com.github.cloudyrock.mongock/mongock-bom)
-* [Mongock runner](https://mvnrepository.com/artifact/com.github.cloudyrock.mongock/mongock)
-* [Mongock driver](https://mvnrepository.com/artifact/com.github.cloudyrock.mongock/mongock-spring-v5)
-* [MongoDB driver sync](https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync)
+Use Mongock when:
 
-Make sure not to import Mongock Core along with the above dependencies, as it will lead you into having multiple versions of a library in your classpath. Read more on this [here](https://github.com/cloudyrock/mongock/issues/274)
+- The database is MongoDB (or another NoSQL store Mongock supports).
+- Migrations are naturally expressed as code (indexes, document backfills, collection renames).
+- You want migrations to run as part of application startup (or a controlled runner) across environments.
 
-On importing the above, all you need to do is:
-* Annote the Application Class with `@EnableMongock`
-* Specify the package(s) where you'd localte your `Changelog` classes on your `application.yml` or `application.properties` under `mongock.change-logs-scan-package`
+Prefer Flyway/Liquibase when the primary store is relational and the team already standardizes on SQL migrations.
 
-With this, the application should be ready to be run, without an issue. If you face any, leave a comment or visit the [issues](https://github.com/cloudyrock/mongock/issues) section on Github, and you'd most likely find a solution for it.
+## Dependencies (coordinates drift)
 
-To add a changelog, create a `changelog` class in the package mentioned in the properties file. Annotate the class with `@Changelog(order = "001...")`. The order defines the order in which the changelog classes will be executed in case there are multiple. The class should now contain the `changesets`. The changesets are nothing but Java methods. You can create collections, insert a document, or do whatever you'd want to that you can do via a Java method. The method would run at the Startup and the changes (if any) would get executed (if not already).
+Early Mongock lived under `com.github.cloudyrock.mongock`. Current community artifacts use the `io.mongock` group. **Do not copy years-old Maven snippets blindly** — take BOM, runner, and driver coordinates from the [current Mongock docs](https://docs.mongock.io/v5/get-started/).
 
-Example class:
+Typical shape for Spring Boot:
 
-```
+- Import `mongock-bom` (or use the Spring Boot 3 starter artifacts the docs list for your Boot major).
+- Add the Spring Boot runner and a MongoDB / Spring Data driver matching your stack.
+
+Avoid pulling an old "mongock-core" alongside the BOM-managed modules; duplicate classes on the classpath are a common failure mode ([historical example](https://github.com/cloudyrock/mongock/issues/274)).
+
+## Wiring
+
+Exact annotations and property names have evolved with Mongock majors. Conceptually you:
+
+1. Enable the Mongock runner (annotation or builder/bean config).
+2. Tell it which package(s) hold migration classes.
+3. Ship `ChangeUnit` / changelog classes with ordered, uniquely identified changesets.
+
+Consult [quick start](https://docs.mongock.io/v5/get-started/) for the API that matches the version you pin. Builder-style setup is useful when you need explicit control over beans and execution.
+
+## Writing a changeset
+
+A migration class holds one or more changesets. Each changeset should:
+
+- Have a **stable, unique `id`** — Mongock records applied ids; renaming an id later does not re-run history cleanly.
+- Be **idempotent where practical**, or assume it runs exactly once and design accordingly (backfills especially).
+- Fail loudly on unexpected state — a half-applied migration is worse than a failed deploy.
+
+Illustrative example (API names vary by Mongock major; treat this as shape, not copy-paste for every version):
+
+```java
 @ChangeLog(order = "001")
-public class Changelog {
-    @ChangeSet(order = "001", id="001", author = "pradipta")
-    public void dummyChangeSet() {
-        System.out.println("Dummy changeset");
+public class UserMigrations {
+
+    @ChangeSet(order = "001", id = "ensure-users-email-index", author = "pradipta")
+    public void ensureEmailIndex(MongoDatabase db) {
+        db.getCollection("users")
+            .createIndex(Indexes.ascending("email"));
     }
 
-    @ChangeSet(order = "002", id="create collection", author = "pradipta")
-    public void createCollection(MongoDatabase db) {
-        MongoCollection<Document> mycollection = db.getCollection("dummycollection");
-        Document doc = new Document("k1", "v1").append("k2", "v2");
-        mycollection.insertOne(doc);
-    }
-
-    @ChangeSet(order = "003", id = "insert document", author = "pradipta")
-    public void insertDocument(MongockTemplate mongockTemplate) {
-        User user = new User("Name", "Email", "Phone");
-        //User is an entity with a collection already defined
-        mongockTemplate.save(user);
+    @ChangeSet(order = "002", id = "backfill-user-status", author = "pradipta")
+    public void backfillStatus(MongoTemplate template) {
+        Query missing = Query.query(Criteria.where("status").exists(false));
+        Update setActive = new Update().set("status", "ACTIVE");
+        template.updateMulti(missing, setActive, "users");
     }
 }
 ```
 
-There is also another method where you write the builder yourself and not annotate the application with `@EnableMongock`. You'd want to do it if you want to have a control over the beans and configure things. Read the [documentation](https://www.mongock.io/quick-start) for more information.
+Empty "hello world" changesets teach the runner; production changesets should do real, reviewable work.
 
-With these, you can be sure to have the changes being executed onto the DB on a successful deployment to any environment.
+## Runtime expectations
 
-Happy coding.
+- Changesets typically run **at startup** (or when your runner bean executes), before the app serves traffic.
+- Already-applied ids are skipped; new ids run in order.
+- **Do not assume automatic rollback.** Design migrations to be forward-safe, or pair risky changes with a compensating migration and a deploy plan.
+- Locking / distributed execution exists so multiple instances do not double-apply — know how your Mongock version handles locks in multi-replica deploys.
+
+With that discipline, every environment applies the same ordered history on a successful deploy — which is the whole point.

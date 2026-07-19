@@ -2,60 +2,78 @@
 featured: true
 title: "Terminal Setup on MacOS"
 date: 2020-05-18 13:32:20 +0300
-description: "The terminal on a Mac device sucks. Do this."
+updatedDate: 2026-07-19
+description: "A practical iTerm2 + Oh My Zsh setup on Mac: Homebrew, autosuggestions, syntax highlighting, and a maintainable .zshrc."
 img: zsh.png
-tags: [ZSH, Mac, Termninal]
+tags: [ZSH, Mac, Terminal]
 ---
-This is what the default terminal looks like on a Mac:
 
-![Terminal on a Mac](https://github.com/pradipta/pradipta.github.io/raw/master/posts/zsh/images/terminal.png)
+macOS ships with Terminal and, since Catalina, zsh as the default shell. That is enough to get work done. It is not enough if you spend most of the day in a shell: prompts stay hard to scan, history is underused, and there is no feedback on whether a command is valid before you run it.
 
-And this sucks. It looks bad, it is hard to read, and differentiate. And there are no fancy colors.
+This setup uses **iTerm2**, **Oh My Zsh**, and two small plugins. The goal is readability and speed, not a theme zoo.
 
-To boost it up and level up the terminal game we’re going to use use the following:
+## Prerequisites
 
-    iTerm2
-    ZSH
-    Oh My ZSH
+Install Apple's Command Line Tools if you do not already have them:
 
-Steps:
+```bash
+xcode-select --install
+```
 
-Install Homebrew. For that, run:
+Install [Homebrew](https://brew.sh/):
 
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
-You may need to install Command Line tool for X-Code before that.
+On Apple Silicon, follow the installer's "Next steps" so `brew` is on your `PATH` (typically `/opt/homebrew/bin`).
 
-    xcode-select --install
+## iTerm2 and Oh My Zsh
 
-Download and install iTerm2 from here or run:
+```bash
+brew install --cask iterm2
+brew install zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
 
-    brew cask install iterm2
+macOS already provides zsh; Homebrew's formula is fine if you want a newer build. Oh My Zsh manages themes, plugins, and a sensible default `.zshrc`.
 
-Install ZSH and oh-my-zsh
+Open iTerm2 and make it your default terminal app if you prefer it over Terminal.app.
 
-    brew install zsh
-    sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+## Autosuggestions and syntax highlighting
 
-To run zsh shell, run:
+```bash
+brew install zsh-autosuggestions zsh-syntax-highlighting
+```
 
-    zsh
+Add both to `.zshrc` (paths differ on Intel vs Apple Silicon):
 
-We’re also going set up Auto Suggestions and Syntax Highlighting to make the experience friendlier and easier to use. To do that we need to edit the .zshrc file (located at `~/.zshrc`). This is where most of our configuration is going to take place.
+```bash
+# Apple Silicon
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-Install zsh-autosuggestions and zsh-syntax-highlighting:
+# Intel Macs typically use /usr/local/share/...
+```
 
-    brew install zsh-syntax-highlighting
-    brew install zsh-autosuggestions
+Reload:
 
-You can set your ZSH theme by putting in this line into your `.zshrc` file. Make sure you import the `.zshrc` after any change for it to reflect.
+```bash
+source ~/.zshrc
+```
 
-    ZSH_THEME=robbyrussell
+You should get grey ghost-text suggestions from history, and commands that turn red when the shell cannot find them.
 
-At this point your terminal/iTerm2 should look something like:
+Pick a theme if you want one. The default Oh My Zsh theme is fine:
 
-![iTerm2 with ZSH](https://github.com/pradipta/pradipta.github.io/raw/master/posts/zsh/images/zsh.png)
+```bash
+ZSH_THEME="robbyrussell"
+```
 
-And this is much better. Notice the short git commands that I’ve used? Well, those are configurable too. Follow this [repository](https://github.com/pradipta/Terminal-Setup-for-Mac) for the complete guide and .zshrc file with all the configurations, aliases and functions.
+![iTerm2 with ZSH](/assets/img/zsh.png)
 
-Thanks for reading.
+## Going further
+
+Aliases, git helpers, and the rest of a personal config belong in `.zshrc` — keep that file versioned so a new machine is a clone away. My full config lives in [Terminal-Setup-for-Mac](https://github.com/pradipta/Terminal-Setup-for-Mac).
+
+If you only do one thing from this post: install autosuggestions and syntax highlighting. Everything else is optional polish.

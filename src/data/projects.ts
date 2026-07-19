@@ -27,7 +27,7 @@ export const projects: Project[] = [
   //   title: "Slackbot with Hubot",
   //   description:
   //     "Workplace automation and fun scripts built on Hubot for Slack, covering generators, custom CoffeeScript/JS modules, and integrations.",
-  //   href: "/build-a-salckbot-using-hubot/",
+  //   href: "/build-a-slackbot-using-hubot/",
   //   tags: ["Hubot", "Slack", "Node.js"],
   //   year: "2020",
   // },

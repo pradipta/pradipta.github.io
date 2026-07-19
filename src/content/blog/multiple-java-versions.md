@@ -2,34 +2,60 @@
 featured: true
 title: "Manage Multiple JDK Versions on Your Computer"
 date: 2020-11-12 13:32:20 +0300
-description: "How to handle multiple versions of JDK and switch between them as and when needed"
+updatedDate: 2026-07-19
+description: "Switch between JDKs on macOS with java_home, shell aliases, and a PATH that actually follows JAVA_HOME."
 img: java-versions.jpg
-tags: [Java, JDK, Java Versions, Java 8, Java 11, JVM]
+tags: [Java, JDK, Java Versions, JVM]
 ---
-Java now released a new version every 6 months, the latest as on the date of this post is the [JDK 15](https://openjdk.java.net/projects/jdk/15/), while the LTS are released at longer intervals.
 
-You might be using a version of Java for work or your personal use, and may need to use another version of it for a different project. Or, if you're one who would want to try out the newest version as soon as it comes out and also have the stable version installed, this can help. Although, you can pick up a JAR from anytime in the past 25 years, and most likely it will run on the newest version of Java, it is good to have an LTS (or whatever your main version of need is) installed for your actual projects.
+Java ships a new feature release every six months, with LTS versions on a slower cadence. Day-to-day work often means more than one JDK: an LTS for production services, another for a legacy module, sometimes a newer build to try language features.
 
-To change a version of Java, you need to change the `JAVA_HOME` environment variable. And it's a pain to do it every time.
+On macOS, the supported way to locate installed JDKs is `/usr/libexec/java_home`. Pointing `JAVA_HOME` (and `PATH`) at the right one is enough for most workflows.
 
-I have two projects that I work on almost everyday. One runs on Java 8 while the other is on Java 11. Here's what I did to be able to switch between them when needed.
+## The alias approach
 
-```
+I regularly switch between Java 8 and Java 11. This lives in `~/.zshrc`:
+
+```bash
 export JAVA8_HOME=$(/usr/libexec/java_home -v1.8)
 export JAVA11_HOME=$(/usr/libexec/java_home -v11)
+
+# Prefer JAVA_HOME's bin over whatever else is on PATH
+export PATH="$JAVA_HOME/bin:$PATH"
 
 alias java8='export JAVA_HOME=$JAVA8_HOME'
 alias java11='export JAVA_HOME=$JAVA11_HOME'
 
-# To use Java 8
-java8
-
-# To use Java 11
+# Default for new shells
 java11
 ```
 
-After doing so, I now have two aliases `java8` and `java11`, calling which, sets my `JAVA_HOME` to either `JAVA8_HOME` or `JAVA11_HOME`. Adding a new one is as easy as exporting a new home and creating an alias for it.
+Then:
 
-In case you're using zsh, you can write these into your `.zshrc` file using `echo` or pasting them into the file manually and doing a `source ~/.zshrc`. An awesome tutorial to set up ZSH is up [here](https://pradipta.github.io/terminal-setup-on-mac/) or [here](https://dev.to/pradipta/terminal-setup-on-macos-48l9)
+```bash
+java8    # or java11
+java -version
+echo $JAVA_HOME
+```
 
-There is another way of doing this using `jenv`. A post on that will be here soon.
+Adding another version is the same pattern: resolve a home with `java_home -v…`, export it, and alias a switcher.
+
+Reload after editing `.zshrc`:
+
+```bash
+source ~/.zshrc
+```
+
+## Caveats worth knowing
+
+- **Shell-local.** These aliases change the current shell (and children). A GUI app or another terminal tab will not see the switch until you run the alias there too.
+- **`PATH` matters.** Setting `JAVA_HOME` alone does nothing if an older `java` earlier on `PATH` wins. Put `$JAVA_HOME/bin` first, as above.
+- **Install first.** `java_home -v11` fails if that JDK is not installed. Install Temurin, Oracle, or whatever you use, then list what macOS sees:
+
+```bash
+/usr/libexec/java_home -V
+```
+
+## When aliases are not enough
+
+If you juggle many JDKs, auto-switch per directory, or share the same workflow on Linux, use a dedicated manager such as [SDKMAN!](https://sdkman.io/) or [jenv](https://www.jenv.be/). For two or three versions on a Mac, `java_home` plus aliases stays the smallest reliable solution.
