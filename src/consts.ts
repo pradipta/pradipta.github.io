@@ -5,9 +5,9 @@ export const SITE_URL = "https://pradipta.github.io";
 
 export const AUTHOR = {
   name: "Pradipta Sarma",
-  role: "Software Engineer",
-  tagline: "UX Enthusiast",
-  bio: "Software engineer with a passion for building reliable backend systems, designing scalable architectures, and creating software that's easy to operate and maintain. I enjoy solving distributed systems problems, improving developer experience, and exploring the technologies that power modern applications.",
+  role: "Senior Software Engineer",
+  tagline: "Distributed systems & backend",
+  bio: "Senior Software Engineer, currently at Uber. Focused on distributed systems, backend software engineering, Java, and AWS.",
   avatar: "/assets/img/pradipta.jpg",
   twitter: "sarmapradipta",
   github: "pradipta",

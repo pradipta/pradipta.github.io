@@ -1,52 +1,188 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SocialLinks from "../components/SocialLinks.astro";
+import TableOfContents from "../components/TableOfContents.astro";
 import { AUTHOR } from "../consts";
+import {
+  awayFromKeyboard,
+  careerLocation,
+  careerSummary,
+  experience,
+  expertise,
+  openSource,
+  skills,
+} from "../data/career";
+
+const headings = [
+  { depth: 2, slug: "areas-of-expertise", text: "Areas of Expertise" },
+  { depth: 2, slug: "experience", text: "Experience" },
+  ...experience.map((job) => ({
+    depth: 3,
+    slug: `${job.company}-${job.team}`
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, ""),
+    text: `${job.company} ${job.team}`,
+  })),
+  { depth: 2, slug: "skills", text: "Skills" },
+  { depth: 2, slug: "open-source--community", text: "Open Source & Community" },
+];
 ---
 
 <BaseLayout
   title="About"
-  description={`About ${AUTHOR.name} — ${AUTHOR.role} and ${AUTHOR.tagline}.`}
+  description={`About ${AUTHOR.name} — ${careerSummary}`}
 >
   <div class="container-page">
-    <div class="mx-auto max-w-2xl">
-      <header class="flex flex-col gap-6 sm:flex-row sm:items-end">
-        <img
-          src={AUTHOR.avatar}
-          alt={AUTHOR.name}
-          class="h-28 w-28 rounded-full object-cover ring-1 ring-[var(--color-border)]"
-          width="112"
-          height="112"
-          loading="eager"
-          decoding="async"
-        />
-        <div>
-          <h1 class="font-sans text-3xl font-semibold tracking-tight sm:text-4xl">
-            About
-          </h1>
-          <p class="mt-2 text-[var(--color-muted)]">
-            {AUTHOR.role} · {AUTHOR.tagline}
-          </p>
+    <div class="mx-auto max-w-6xl xl:grid xl:grid-cols-[minmax(0,1fr)_220px] xl:gap-12">
+      <article class="mx-auto max-w-3xl xl:mx-0 xl:max-w-none">
+        <header class="flex flex-col gap-6 sm:flex-row sm:items-end">
+          <img
+            src={AUTHOR.avatar}
+            alt={AUTHOR.name}
+            class="h-28 w-28 rounded-full object-cover ring-1 ring-[var(--color-border)]"
+            width="112"
+            height="112"
+            loading="eager"
+            decoding="async"
+          />
+          <div>
+            <h1 class="font-sans text-3xl font-semibold tracking-tight sm:text-4xl">
+              About
+            </h1>
+            <p class="mt-2 max-w-2xl text-[var(--color-muted)] leading-relaxed">
+              {careerSummary}
+            </p>
+          </div>
+        </header>
+
+        <div
+          class="mt-8 flex flex-wrap gap-x-6 gap-y-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-code-bg)] px-4 py-3 text-sm"
+        >
+          <span class="text-[var(--color-muted)]">{careerLocation}</span>
+          <a
+            href={`https://www.linkedin.com/in/${AUTHOR.linkedin}`}
+            class="text-[var(--color-fg)] underline decoration-dashed decoration-[var(--color-muted)] underline-offset-4 hover:text-[var(--color-accent)] hover:decoration-solid"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </a>
+          <a
+            href={`https://github.com/${AUTHOR.github}`}
+            class="text-[var(--color-fg)] underline decoration-dashed decoration-[var(--color-muted)] underline-offset-4 hover:text-[var(--color-accent)] hover:decoration-solid"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
         </div>
-      </header>
 
-      <div class="prose-blog mt-10">
-        <p>{AUTHOR.bio}</p>
-        <p>
-            This blog is where I share what I learn along the way—covering Java, system design, cloud infrastructure, Git, Linux, developer tooling, and the occasional deep dive into side projects.
-        </p>
-        <p>
-            Over the years, I've worked across infrastructure, search, and fintech at Uber, AWS, Flipkart, and upGrad, building systems that serve millions of users at scale.
-        </p>
-        <p>
-            When I'm away from the keyboard, you'll probably find me traveling, photographing new places, reading science fiction, or building something simply because it sounded like an interesting idea.
-        </p>
-      </div>
+        <p class="mt-6 text-sm text-[var(--color-muted)]">{awayFromKeyboard}</p>
 
-      <div class="mt-10">
-        <h2 class="mb-4 font-sans text-lg font-semibold tracking-tight">Connect</h2>
-        <SocialLinks />
-      </div>
+        <section class="mt-12">
+          <h2
+            id="areas-of-expertise"
+            class="scroll-mt-28 font-sans text-2xl font-semibold tracking-tight"
+          >
+            Areas of Expertise
+          </h2>
+          <div class="cv-skills-grid mt-6">
+            {
+              expertise.map((area) => (
+                <div class="cv-skill-card">
+                  <strong>{area.title}</strong>
+                  <p>{area.description}</p>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+
+        <section class="mt-12">
+          <h2
+            id="experience"
+            class="scroll-mt-28 font-sans text-2xl font-semibold tracking-tight"
+          >
+            Experience
+          </h2>
+          <div class="cv-experience mt-6">
+            {
+              experience.map((job) => {
+                const id = `${job.company}-${job.team}`
+                  .toLowerCase()
+                  .replace(/[^a-z0-9]+/g, "-")
+                  .replace(/(^-|-$)/g, "");
+                return (
+                  <div class="cv-job" id={id}>
+                    <div class="cv-job-header">
+                      <h3 class="scroll-mt-28 font-sans text-lg font-semibold tracking-tight">
+                        {job.company}{" "}
+                        <span class="cv-team">{job.team}</span>
+                      </h3>
+                      {job.dates && <span class="cv-date">{job.dates}</span>}
+                    </div>
+                    {job.title && (
+                      <p class="text-sm text-[var(--color-muted)]">{job.title}</p>
+                    )}
+                    {job.highlights && job.highlights.length > 0 && (
+                      <ul>
+                        {job.highlights.map((item) => (
+                          <li>{item}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                );
+              })
+            }
+          </div>
+        </section>
+
+        <section class="mt-12">
+          <h2
+            id="skills"
+            class="scroll-mt-28 font-sans text-2xl font-semibold tracking-tight"
+          >
+            Skills
+          </h2>
+          <div class="cv-tags mt-5">
+            {skills.map((skill) => <span class="cv-tag">{skill}</span>)}
+          </div>
+        </section>
+
+        <section class="mt-12 pb-4">
+          <h2
+            id="open-source--community"
+            class="scroll-mt-28 font-sans text-2xl font-semibold tracking-tight"
+          >
+            Open Source & Community
+          </h2>
+          <div class="mt-5 space-y-4 text-[1.0625rem] leading-relaxed">
+            {
+              openSource.map((item) => (
+                <p>
+                  <strong>
+                    <a
+                      href={item.href}
+                      class="text-[var(--color-accent)] underline decoration-[color-mix(in_oklab,var(--color-accent)_40%,transparent)] underline-offset-4 hover:decoration-[var(--color-accent)]"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.name}
+                    </a>
+                  </strong>
+                  {" — "}
+                  {item.role}. {item.description}
+                </p>
+              ))
+            }
+          </div>
+        </section>
+      </article>
+
+      <aside class="sticky top-24 self-start pt-2">
+        <TableOfContents headings={headings} />
+      </aside>
     </div>
   </div>
 </BaseLayout>

@@ -166,6 +166,60 @@ html.dark {
   html.dark .prose-blog pre .dark {
     display: inherit;
   }
+
+  .cv-skills-grid {
+    @apply grid gap-4;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .cv-skill-card {
+    @apply rounded-lg border border-[var(--color-border)] bg-[var(--color-code-bg)] px-5 py-4;
+  }
+
+  .cv-skill-card strong {
+    @apply mb-1.5 block font-sans text-[0.95rem] font-semibold text-[var(--color-fg)];
+  }
+
+  .cv-skill-card p {
+    @apply m-0 text-sm leading-relaxed text-[var(--color-muted)];
+  }
+
+  .cv-experience {
+    @apply flex flex-col gap-8;
+  }
+
+  .cv-job {
+    @apply border-l-[3px] border-[var(--color-fg)] pl-5;
+  }
+
+  .cv-job-header {
+    @apply flex flex-wrap items-baseline justify-between gap-2;
+  }
+
+  .cv-team {
+    @apply font-normal text-[var(--color-muted)];
+    font-size: 0.95rem;
+  }
+
+  .cv-team::before {
+    content: "·\00a0";
+  }
+
+  .cv-date {
+    @apply whitespace-nowrap text-sm text-[var(--color-muted)];
+  }
+
+  .cv-job ul {
+    @apply mt-3 list-disc space-y-2 pl-5 text-[0.95rem] leading-relaxed;
+  }
+
+  .cv-tags {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .cv-tag {
+    @apply inline-block rounded-full border border-[var(--color-border)] bg-[var(--color-code-bg)] px-3 py-1.5 font-mono text-sm;
+  }
 }
 
 /* Soft page atmosphere */
