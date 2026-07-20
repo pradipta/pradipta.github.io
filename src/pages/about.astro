@@ -8,6 +8,7 @@ import {
   careerSummary,
   experience,
   expertise,
+  jobSlug,
   openSource,
   skills,
 } from "../data/career";
@@ -15,14 +16,25 @@ import {
 const headings = [
   { depth: 2, slug: "areas-of-expertise", text: "Areas of Expertise" },
   { depth: 2, slug: "experience", text: "Experience" },
-  ...experience.map((job) => ({
-    depth: 3,
-    slug: `${job.company}-${job.team}`
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, ""),
-    text: `${job.company} ${job.team}`,
-  })),
+  ...experience.flatMap((job) => {
+    if (!job.roles?.length) {
+      return [
+        {
+          depth: 3,
+          slug: jobSlug(job),
+          text: job.team ? `${job.company} ${job.team}` : job.company,
+        },
+      ];
+    }
+    return [
+      { depth: 3, slug: jobSlug(job), text: job.company },
+      ...job.roles.map((role) => ({
+        depth: 4,
+        slug: jobSlug(job, role),
+        text: role.team,
+      })),
+    ];
+  }),
   { depth: 2, slug: "skills", text: "Skills" },
   { depth: 2, slug: "open-source--community", text: "Open Source & Community" },
 ];
@@ -107,33 +119,55 @@ const headings = [
           </h2>
           <div class="cv-experience mt-6">
             {
-              experience.map((job) => {
-                const id = `${job.company}-${job.team}`
-                  .toLowerCase()
-                  .replace(/[^a-z0-9]+/g, "-")
-                  .replace(/(^-|-$)/g, "");
-                return (
-                  <div class="cv-job" id={id}>
-                    <div class="cv-job-header">
-                      <h3 class="scroll-mt-28 font-sans text-lg font-semibold tracking-tight">
-                        {job.company}{" "}
-                        <span class="cv-team">{job.team}</span>
-                      </h3>
-                      {job.dates && <span class="cv-date">{job.dates}</span>}
-                    </div>
-                    {job.title && (
-                      <p class="text-sm text-[var(--color-muted)]">{job.title}</p>
-                    )}
-                    {job.highlights && job.highlights.length > 0 && (
-                      <ul>
-                        {job.highlights.map((item) => (
-                          <li>{item}</li>
-                        ))}
-                      </ul>
-                    )}
+              experience.map((job) => (
+                <div class="cv-job" id={jobSlug(job)}>
+                  <div class="cv-job-header">
+                    <h3 class="scroll-mt-28 font-sans text-lg font-semibold tracking-tight">
+                      {job.company}
+                      {job.team && <span class="cv-team">{job.team}</span>}
+                    </h3>
+                    {job.dates && <span class="cv-date">{job.dates}</span>}
                   </div>
-                );
-              })
+                  {job.title && (
+                    <p class="text-sm text-[var(--color-muted)]">{job.title}</p>
+                  )}
+                  {job.roles && job.roles.length > 0 && (
+                    <div class="cv-roles">
+                      {job.roles.map((role) => (
+                        <div class="cv-role" id={jobSlug(job, role)}>
+                          <div class="cv-job-header">
+                            <h4 class="scroll-mt-28 font-sans text-base font-semibold tracking-tight">
+                              {role.team}
+                            </h4>
+                            {role.dates && (
+                              <span class="cv-date">{role.dates}</span>
+                            )}
+                          </div>
+                          {role.title && (
+                            <p class="text-sm text-[var(--color-muted)]">
+                              {role.title}
+                            </p>
+                          )}
+                          {role.highlights && role.highlights.length > 0 && (
+                            <ul>
+                              {role.highlights.map((item) => (
+                                <li>{item}</li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {job.highlights && job.highlights.length > 0 && (
+                    <ul class:list={[job.roles?.length && "mt-5"]}>
+                      {job.highlights.map((item) => (
+                        <li>{item}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))
             }
           </div>
         </section>

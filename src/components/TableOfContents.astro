@@ -10,7 +10,7 @@ interface Props {
 }
 
 const { headings } = Astro.props;
-const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const items = headings.filter((h) => h.depth >= 2 && h.depth <= 4);
 ---
 
 {
@@ -29,7 +29,9 @@ const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
               href={`#${heading.slug}`}
               class:list={[
                 "block border-l-2 border-transparent py-0.5 text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-fg)]",
-                heading.depth === 2 ? "pl-3" : "pl-6",
+                heading.depth === 2 && "pl-3",
+                heading.depth === 3 && "pl-6",
+                heading.depth >= 4 && "pl-9",
               ]}
             >
               {heading.text}

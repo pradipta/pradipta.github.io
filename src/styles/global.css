@@ -213,6 +213,14 @@ html.dark {
     @apply mt-3 list-disc space-y-2 pl-5 text-[0.95rem] leading-relaxed;
   }
 
+  .cv-roles {
+    @apply mt-5 flex flex-col gap-5;
+  }
+
+  .cv-role {
+    @apply border-l-2 border-[var(--color-border)] pl-4;
+  }
+
   .cv-tags {
     @apply flex flex-wrap gap-2;
   }
