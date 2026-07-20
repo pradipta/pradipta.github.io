@@ -1,5 +1,4 @@
 ---
-featured: true
 title: "Mongock, Mongo and Java"
 date: 2020-11-29 13:32:20 +0300
 updatedDate: 2026-07-19

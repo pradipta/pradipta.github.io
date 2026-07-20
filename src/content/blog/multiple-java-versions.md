@@ -1,5 +1,4 @@
 ---
-featured: true
 title: "Manage Multiple JDK Versions on Your Computer"
 date: 2020-11-12 13:32:20 +0300
 updatedDate: 2026-07-19

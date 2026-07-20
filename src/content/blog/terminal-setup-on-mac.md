@@ -1,5 +1,4 @@
 ---
-featured: true
 title: "Terminal Setup on MacOS"
 date: 2020-05-18 13:32:20 +0300
 updatedDate: 2026-07-19
