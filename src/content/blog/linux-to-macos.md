@@ -9,15 +9,15 @@ tags: [Mac, Linux]
 
 If you had told me in 2019 that I would eventually be spending my own money on a Mac, I would have laughed.
 
-I started my software engineering career working on company-provided Intel i7 MacBooks. To put it bluntly: they felt limiting, slow, and weird. They ran hot, the butterfly keyboard was an ergonomic nightmare, and the Touchbar remains one of the worst product decisions in modern hardware history.
+I started my software engineering career working on company-provided Intel i7 MacBooks. To put it bluntly: they felt limiting, slow, and weird. They ran hot, the butterfly keyboard was an ergonomic nightmare, and the Touchbar remains one of the worst product decisions in modern hardware history. The ports were also incredibly limited; I could only connect a single external display via one port.
 
-Back then, I was convinced that a 13-inch Linux machine—maybe a Dell XPS—was the ultimate developer setup. I didn’t actually _own_ one because I never needed a personal computer, but it was always sitting there on my wishlist.
+Back then, I was convinced that a 13-inch Linux machine (maybe a Dell XPS) was the ultimate developer setup. I didn’t actually _own_ one because I never needed a personal computer, but it was always sitting there on my wishlist.
 
 ### The Turning Point
 
 Things shifted in 2022 when a new workplace handed me an M1 Pro MacBook. I had heard the hype around the M-series chips, but feeling the difference was jarring. The keyboard was finally fixed, the thermal throttling was gone, and the battery life was incredible.
 
-Old habits die hard, though. Even after experiencing the M1 Pro, I still had that lingering "Linux guy" identity. At one point, I actually tried to request a Linux machine from work, but the order fell through due to stock issues. Looking back? The IT supply chain intervening was probably for the best. My brother also told me to let it go and stick to the Mac (I did not understand why).
+Old habits die hard, though. Even after experiencing the M1 Pro, I still had that lingering desire to get a Linux. At one point, I actually tried to request a Linux machine from work, but the order fell through due to stock issues. Looking back? The IT supply chain intervening was probably for the best. My brother also told me to let it go and stick to the Mac (I did not understand why).
 
 ### The Pragmatic Conversion
 
