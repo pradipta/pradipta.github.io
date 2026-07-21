@@ -1,5 +1,5 @@
 ---
-featured: true
+#featured: true
 title: "My Work Setup"
 date: 2024-08-01 13:32:20 +0530
 updatedDate: 2026-07-19

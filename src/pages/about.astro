@@ -98,16 +98,16 @@ const headings = [
           >
             Areas of Expertise
           </h2>
-          <div class="cv-skills-grid mt-6">
+          <dl class="cv-expertise mt-6">
             {
               expertise.map((area) => (
-                <div class="cv-skill-card">
-                  <strong>{area.title}</strong>
-                  <p>{area.description}</p>
+                <div class="cv-expertise-row">
+                  <dt>{area.title}</dt>
+                  <dd>{area.description}</dd>
                 </div>
               ))
             }
-          </div>
+          </dl>
         </section>
 
         <section class="mt-12">

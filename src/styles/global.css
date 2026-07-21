@@ -167,21 +167,20 @@ html.dark {
     display: inherit;
   }
 
-  .cv-skills-grid {
-    @apply grid gap-4;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  .cv-expertise {
+    @apply divide-y divide-[var(--color-border)] border-y border-[var(--color-border)];
   }
 
-  .cv-skill-card {
-    @apply rounded-lg border border-[var(--color-border)] bg-[var(--color-code-bg)] px-5 py-4;
+  .cv-expertise-row {
+    @apply grid gap-1 py-4 sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] sm:gap-8 sm:items-baseline;
   }
 
-  .cv-skill-card strong {
-    @apply mb-1.5 block font-sans text-[0.95rem] font-semibold text-[var(--color-fg)];
+  .cv-expertise-row dt {
+    @apply font-sans text-[0.95rem] font-semibold tracking-tight text-[var(--color-fg)];
   }
 
-  .cv-skill-card p {
-    @apply m-0 text-sm leading-relaxed text-[var(--color-muted)];
+  .cv-expertise-row dd {
+    @apply m-0 text-sm leading-relaxed text-[var(--color-muted)] sm:text-[0.95rem];
   }
 
   .cv-experience {
