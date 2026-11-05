@@ -16,7 +16,7 @@ Current work-from-home setup. Updated as gear changes.
 - **Personal laptop:** 13" MacBook Air (M5)
 - **Mac mini:** runs OpenClaw
 - **Raspberry Pi:** hosts a few personal projects
-- **Phone:** iPhone 12 Pro Max (primary, since Dec 2020); Pixel 8 (secondary)
+- **Phone:** iPhone 18 Pro (primary, since Oct 2026); Pixel 8 (secondary)
 - **Tablet:** iPad Air 4 (10.9", Wi‑Fi) for notes, meetings, and reading
 
 ## Desk and displays
